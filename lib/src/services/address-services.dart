@@ -1,37 +1,17 @@
-import 'dart:async';
 import 'package:bestapp_package/src/models/address-model.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:toast/toast.dart';
 
-class GeoService{  
+class AddressService{  
 
-  static Future<Coordinates> getCurrentPositionCoordinates({BuildContext context}) async {
+  static Future<AddressMdl> getAddress({@required BuildContext context, @required String addressSearch}) async{
     LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-    }
-    if (permission == LocationPermission.deniedForever) {
-      Toast.show(
-        'Permissão de localização negada, por favor, vá em configurações do seu dispositivo e habilite a permissāo de localizaçāo.',
-        context,
-        duration: Toast.LENGTH_LONG,
-        gravity: Toast.TOP
-      );
-    }
-    if (permission == LocationPermission.whileInUse || permission == LocationPermission.always) {
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      return  Coordinates(position.latitude, position.longitude);
-    }
-    return null;
-  }
-
-  static Future<AddressMdl> getCurrentPosition({BuildContext context}) async {
-    LocationPermission permission = await Geolocator.checkPermission();
-
     AddressMdl addressMdl = new AddressMdl();
 
+    if (addressSearch == null)return null;
+
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
     }
@@ -46,8 +26,7 @@ class GeoService{
     }
 
     if (permission == LocationPermission.whileInUse || permission == LocationPermission.always) {
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      var placemarks = await Geocoder.local.findAddressesFromCoordinates(Coordinates(position.latitude, position.longitude));
+      var placemarks = await Geocoder.local.findAddressesFromQuery(addressSearch);
       if (! placemarks.asMap().containsKey(0))return null;
       addressMdl.state = placemarks.first.adminArea;
       addressMdl.country = placemarks.first.countryName;

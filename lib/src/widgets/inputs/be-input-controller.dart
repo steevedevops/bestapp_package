@@ -26,7 +26,7 @@ class BeInputController extends StatefulWidget {
   final hintText;
   final bool enable;
   final bool obscure;
-  final TypeInput typeinput;
+  final TypeInput typeInput;
   final List<TextInputFormatter> inputFormatters;
   final TextInputType keyboardType;
   final Function onTap;
@@ -41,7 +41,7 @@ class BeInputController extends StatefulWidget {
     this.prefixIcon,
     this.enable=true,
     this.obscure=true,
-    this.typeinput,
+    this.typeInput,
     this.inputFormatters,
     this.keyboardType,
     this.onTap,
@@ -67,11 +67,11 @@ class _BeInputControllerState extends State<BeInputController> {
         },
         controller: widget.textController,
         enabled:  widget.enable,
-        obscureText: widget.typeinput == TypeInput.PASSWORD && widget.obscure ? true : false,
-        inputFormatters: defineTypeformatters(widget.typeinput),
-        keyboardType: defineTypeInput(widget.typeinput),
+        obscureText: widget.typeInput == TypeInput.PASSWORD && widget.obscure ? true : false,
+        inputFormatters: defineTypeformatters(widget.typeInput),
+        keyboardType: defineTypeInput(widget.typeInput),
         decoration: new InputDecoration(
-          suffixIcon:  widget.suffixIcon != null && widget.typeinput == TypeInput.PASSWORD ?
+          suffixIcon:  widget.suffixIcon != null && widget.typeInput == TypeInput.PASSWORD ?
           GestureDetector(
             onTap: widget.onTap,
             child: GestureDetector(

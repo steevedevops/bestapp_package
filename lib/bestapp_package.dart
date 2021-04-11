@@ -8,11 +8,13 @@ export 'src/services/mdl-api.dart';
 export 'src/services/place_services.dart';
 
 // Widget
-export 'src/widgets/card-selected.dart';
-export 'src/widgets/button-outline.dart';
+export 'src/widgets/cards/card-selected.dart';
 export 'src/widgets/separate.dart';
 export 'src/widgets/loading/load-circular-state.dart';
-export 'src/widgets/buttons/button-simple.dart';
+export 'src/widgets/buttons/be-button.dart';
+export 'src/widgets/buttons/be-button-outline.dart';
+export 'src/widgets/buttons/be-button-outline-icon.dart';
+export 'src/widgets/buttons/be-button-icon.dart';
 export 'src/widgets/cached-slider-images.dart';
 export 'src/widgets/appbar/be-appbar.dart';
 export 'src/widgets/appbar/be-appbar-pref.dart';

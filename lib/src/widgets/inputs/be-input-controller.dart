@@ -30,6 +30,7 @@ class BeInputController extends StatefulWidget {
   final List<TextInputFormatter> inputFormatters;
   final TextInputType keyboardType;
   final Function onTap;
+  final EdgeInsetsGeometry padding;
   
   BeInputController({
     this.textController, 
@@ -43,7 +44,8 @@ class BeInputController extends StatefulWidget {
     this.typeinput,
     this.inputFormatters,
     this.keyboardType,
-    this.onTap
+    this.onTap,
+    this.padding
   });
 
   @override
@@ -55,7 +57,7 @@ class _BeInputControllerState extends State<BeInputController> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.fulwidth ? MediaQuery.of(context).size.width : widget.width,
-      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+      padding: widget.padding != null ? widget.padding :  EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: TextFormField(
         validator: (value) {
           if (value.isEmpty) {

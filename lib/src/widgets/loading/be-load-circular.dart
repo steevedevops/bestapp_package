@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget loadCircularState({BuildContext context, bool colwhite}){
+Widget beloadCircular({BuildContext context, bool colwhite}){
   return Center(
     child: CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation<Color>(

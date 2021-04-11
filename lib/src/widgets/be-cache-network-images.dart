@@ -3,13 +3,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class CachedSliderImages extends StatelessWidget {
+class BecacheNetworkImages extends StatelessWidget {
 
   final String imageUrl;
   final bool circleImg;
   final bool compleImages;
   final bool simpleradius;
-  CachedSliderImages({this.imageUrl, this.circleImg, this.compleImages, this.simpleradius=false});
+  
+  BecacheNetworkImages({this.imageUrl, this.circleImg, this.compleImages, this.simpleradius=false});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class CachedSliderImages extends StatelessWidget {
       placeholder:(context, url) => Container(
         width: (MediaQuery.of(context).size.width /(4.3)),
         height: (MediaQuery.of(context).size.width /(4.2)),
-        child: loadCircularState(context:context,colwhite:false),
+        child: beloadCircular(context:context,colwhite:false),
       ),
       errorWidget: (context, url, error) => Container(
         width: (MediaQuery.of(context).size.width / (3.5)),
@@ -43,8 +44,7 @@ class CachedSliderImages extends StatelessWidget {
           ),
         ),
       ),
-    ):
-    CachedNetworkImage(
+    ) : CachedNetworkImage(
       imageUrl: imageUrl,
       imageBuilder: (context, imageProvider) => Container(
         width: (MediaQuery.of(context).size.width / (3.5)),
@@ -60,7 +60,7 @@ class CachedSliderImages extends StatelessWidget {
       placeholder:(context, url) => Container(
         width: (MediaQuery.of(context).size.width /(4.3)),
         height: (MediaQuery.of(context).size.width /(4.2)),
-        child: loadCircularState(context:context,colwhite:false),
+        child: beloadCircular(context:context,colwhite:false),
       ),
       errorWidget: (context, url, error) => Container(
         width: (MediaQuery.of(context).size.width / (3.5)),

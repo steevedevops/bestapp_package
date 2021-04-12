@@ -21,7 +21,7 @@ class BebuttonOutline extends StatelessWidget {
     this.buttonWidth = 300,
     this.buttonHeight,
     @required this.onPressed, 
-    this.large=false,
+    this.large=true,
     this.overlayColor,
     this.showOverlayColor=false,
     this.shadowColor,

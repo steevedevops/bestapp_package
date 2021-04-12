@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-class CardSelected extends StatefulWidget {
+class BecardSelected extends StatefulWidget {
 
   final Function onTap;
   final IconData icon;
@@ -7,7 +7,7 @@ class CardSelected extends StatefulWidget {
   final bool selected;
   final Color carColor;
 
-  CardSelected({
+  BecardSelected({
     this.onTap, 
     this.icon, 
     this.title="", 
@@ -16,10 +16,10 @@ class CardSelected extends StatefulWidget {
   });
 
   @override
-  _CardSelectedState createState() => _CardSelectedState();
+  _BecardSelectedState createState() => _BecardSelectedState();
 }
 
-class _CardSelectedState extends State<CardSelected> {
+class _BecardSelectedState extends State<BecardSelected> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

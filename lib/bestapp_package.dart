@@ -8,7 +8,7 @@ export 'src/services/mdl-api.dart';
 export 'src/services/place_services.dart';
 
 // Widget
-export 'src/widgets/cards/card-selected.dart';
+export 'src/widgets/cards/be-card-selected.dart';
 export 'src/widgets/be-separate.dart';
 export 'src/widgets/loading/be-load-circular.dart';
 export 'src/widgets/buttons/be-button.dart';

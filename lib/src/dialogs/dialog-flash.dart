@@ -2,7 +2,18 @@ import 'dart:ui';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 
-void dialogFlash({@required BuildContext context,@required String message}){
+enum DialogType {
+  DEFAULT,
+  DANGER,
+  SUCESS,
+  INFO,
+  WARNING
+}
+
+void beDialogFlash({
+  @required BuildContext context, 
+  @required String message
+}){
   showFlash(
     context: context, 
     duration: const Duration(seconds:4), 

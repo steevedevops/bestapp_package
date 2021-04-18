@@ -5,14 +5,16 @@ class BeAppbar extends StatelessWidget implements PreferredSizeWidget {
   BeAppbar({
     Key key, 
     this.title,
-    this.leading,
+    this.leadingIcon,
+    this.leadingAction,
     this.scaffoldKey, 
     this.bgColor,
     this.actions
     }): super(key: key);
 
   final Widget title;
-  final Widget leading;
+  final IconData leadingIcon;
+  final Function leadingAction;
   final GlobalKey<ScaffoldState> scaffoldKey;
   final Size appBarHeight = Size.fromHeight(56.0);
   final Color bgColor;
@@ -29,7 +31,10 @@ class BeAppbar extends StatelessWidget implements PreferredSizeWidget {
         elevation: 0.0,
         centerTitle: true,
         backgroundColor: bgColor != null ? bgColor : null,
-        leading: leading,
+        leading: IconButton(
+          icon: Icon(leadingIcon), 
+          onPressed: leadingAction
+        ),
         title: title,
         actions: actions,
       )

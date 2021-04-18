@@ -1,7 +1,11 @@
 # bestapp_package
 
 A new Flutter package project.
+tipo de alertas.
 
+snackbar
+toast
+dialog
 ## Getting Started
 
 This project is a starting point for a Dart

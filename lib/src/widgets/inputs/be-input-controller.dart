@@ -9,6 +9,7 @@ enum TypeInput {
   NONE,
   PASSWORD,
   EMAIL,
+  COUNTER,
 
   // brasil
   CPF,
@@ -18,7 +19,7 @@ enum TypeInput {
 }
 
 class BeInputController extends StatefulWidget {
-  final TextEditingController textController;
+  final TextEditingController controller;
   final bool fulwidth;
   final double width;
   final IconData suffixIcon;
@@ -29,11 +30,14 @@ class BeInputController extends StatefulWidget {
   final TypeInput typeInput;
   final List<TextInputFormatter> inputFormatters;
   final TextInputType keyboardType;
-  final Function onTap;
+  final Function onSuffixTap;
+  final Function onPrefixTap;
+  final bool readOnly;
+  final bool enableInteractiveSelection;
   final EdgeInsetsGeometry padding;
   
   BeInputController({
-    this.textController, 
+    this.controller, 
     this.width,
     this.fulwidth = true,
     this.hintText, 
@@ -44,8 +48,11 @@ class BeInputController extends StatefulWidget {
     this.typeInput,
     this.inputFormatters,
     this.keyboardType,
-    this.onTap,
-    this.padding
+    this.onSuffixTap,
+    this.onPrefixTap,
+    this.padding,
+    this.enableInteractiveSelection=true,
+    this.readOnly=false
   });
 
   @override
@@ -65,23 +72,27 @@ class _BeInputControllerState extends State<BeInputController> {
           }
           return null;
         },
-        controller: widget.textController,
+        controller: widget.controller,
         enabled:  widget.enable,
+        readOnly: widget.readOnly,
+        enableInteractiveSelection: widget.enableInteractiveSelection,
+        showCursor: true,
         obscureText: widget.typeInput == TypeInput.PASSWORD && widget.obscure ? true : false,
         inputFormatters: defineTypeformatters(widget.typeInput),
         keyboardType: defineTypeInput(widget.typeInput),
         decoration: new InputDecoration(
-          suffixIcon:  widget.suffixIcon != null && widget.typeInput == TypeInput.PASSWORD ?
-          GestureDetector(
-            onTap: widget.onTap,
-            child: GestureDetector(
-              onTap: widget.onTap,
-              child: Icon(widget.suffixIcon),
-            ),
+          suffixIcon:  widget.suffixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CEP) ?
+          IconButton(
+            icon: Icon(widget.suffixIcon), 
+            onPressed: widget.onSuffixTap
           ) : widget.suffixIcon != null ? 
           Icon(widget.suffixIcon) : null,
-
-          prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon) : null,
+          prefixIcon:  widget.prefixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CEP) ?
+          IconButton(
+            icon: Icon(widget.prefixIcon),
+            onPressed: widget.onPrefixTap,
+          ) : widget.prefixIcon != null ? 
+          Icon(widget.prefixIcon) : null,
           hintText:  widget.hintText ?? widget.hintText
         )
       ),
@@ -118,7 +129,7 @@ class _BeInputControllerState extends State<BeInputController> {
   }
 
   TextInputType defineTypeInput(TypeInput typeInput){
-    if(typeInput == TypeInput.CPF || typeInput == TypeInput.CNPJ || typeInput == TypeInput.CEP || typeInput == TypeInput.BR_TEL){
+    if(typeInput == TypeInput.CPF || typeInput == TypeInput.CNPJ || typeInput == TypeInput.CEP || typeInput == TypeInput.BR_TEL || typeInput == TypeInput.COUNTER){
       return TextInputType.number;
     }else if(typeInput == TypeInput.EMAIL){
       return TextInputType.emailAddress;

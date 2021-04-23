@@ -11,6 +11,8 @@ export 'src/services/place_services.dart';
 export 'src/widgets/cards/be-card-selected.dart';
 export 'src/widgets/component/be-separate.dart';
 export 'src/widgets/loading/be-load-circular.dart';
+export 'src/widgets/loading/be-modal-progress-full.dart';
+
 export 'src/widgets/buttons/be-button.dart';
 export 'src/widgets/buttons/be-button-outline.dart';
 export 'src/widgets/buttons/be-button-outline-icon.dart';
@@ -25,10 +27,10 @@ export 'src/widgets/inputs/be-input-dropdown-controller.dart';
 export 'src/widgets/component/border/be-border.dart';
 
 // Dialog
-export 'src/alerts/dialogs/be-dialog-snack.dart';
-export 'src/alerts/dialogs/be-dialog-toast.dart';
-export 'src/alerts/dialogs/be-dialog-center.dart';
-export 'src/alerts/dialogs/dialog-utils.dart';
+export 'src/alerts/be-dialog-snack.dart';
+export 'src/alerts/be-dialog-toast.dart';
+export 'src/alerts/be-dialog-center.dart';
+export 'src/alerts/dialog-utils.dart';
 
 // Utils
 export 'src/utils/bestapp-utils.dart';

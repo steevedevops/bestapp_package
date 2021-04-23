@@ -2,6 +2,7 @@ import 'package:bestapp_package/src/formatters/br_telefone_input_formatter.dart'
 import 'package:bestapp_package/src/formatters/cep_input_formatter.dart';
 import 'package:bestapp_package/src/formatters/cnpj_input_formatter.dart';
 import 'package:bestapp_package/src/formatters/cpf_input_formatter.dart';
+import 'package:bestapp_package/src/formatters/currency_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,6 +11,7 @@ enum TypeInput {
   PASSWORD,
   EMAIL,
   COUNTER,
+  CURRENCY,
 
   // brasil
   CPF,
@@ -81,13 +83,13 @@ class _BeInputControllerState extends State<BeInputController> {
         inputFormatters: defineTypeformatters(widget.typeInput),
         keyboardType: defineTypeInput(widget.typeInput),
         decoration: new InputDecoration(
-          suffixIcon:  widget.suffixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CEP) ?
+          suffixIcon:  widget.suffixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP) ?
           IconButton(
             icon: Icon(widget.suffixIcon), 
             onPressed: widget.onSuffixTap
           ) : widget.suffixIcon != null ? 
           Icon(widget.suffixIcon) : null,
-          prefixIcon:  widget.prefixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CEP) ?
+          prefixIcon:  widget.prefixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP) ?
           IconButton(
             icon: Icon(widget.prefixIcon),
             onPressed: widget.onPrefixTap,
@@ -124,12 +126,18 @@ class _BeInputControllerState extends State<BeInputController> {
         BrtelefoneInputFormatter()
       ];
     }
+    else if(typeInput == TypeInput.CURRENCY){
+      return [
+        FilteringTextInputFormatter.digitsOnly,
+        CurrencyInputFormatter(showprefix: true)
+      ];
+    }
     // retorno o widget defaut que pode seu utilizado pelo usuario se quize
     else return widget.inputFormatters;
   }
 
   TextInputType defineTypeInput(TypeInput typeInput){
-    if(typeInput == TypeInput.CPF || typeInput == TypeInput.CNPJ || typeInput == TypeInput.CEP || typeInput == TypeInput.BR_TEL || typeInput == TypeInput.COUNTER){
+    if(typeInput == TypeInput.CPF || typeInput == TypeInput.CNPJ || typeInput == TypeInput.CEP || typeInput == TypeInput.BR_TEL || typeInput == TypeInput.COUNTER || typeInput == TypeInput.CURRENCY){
       return TextInputType.number;
     }else if(typeInput == TypeInput.EMAIL){
       return TextInputType.emailAddress;

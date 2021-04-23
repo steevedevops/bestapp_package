@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-class CurrencyPtBrInputFormatter extends TextInputFormatter {
+class CurrencyInputFormatter extends TextInputFormatter {
 
   final bool showprefix;
-  CurrencyPtBrInputFormatter({this.showprefix = true});
+  CurrencyInputFormatter({this.showprefix = true});
 
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     if(newValue.selection.baseOffset == 0){

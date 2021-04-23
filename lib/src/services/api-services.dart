@@ -44,14 +44,15 @@ class ApiServices{
     return jsonReturned;
   }
 
-  Future<Map> uploadFile({@required String rota, @required File file}) async {
+  Future<Map> uploadFile({@required String rota, @required File file, Map<String, dynamic> paramsData}) async {
     var dio = new Dio();
     var response;
 
     if (this._token != null) {        
       dio.options.baseUrl = this._baseUrl+this._appVersion;
       FormData formData = new FormData.fromMap({
-        "file": await MultipartFile.fromFile(file.absolute.path, filename: DateTime.now().millisecondsSinceEpoch.toString()+'.jpg')
+        ...paramsData,
+        'file': await MultipartFile.fromFile(file.absolute.path, filename: DateTime.now().millisecondsSinceEpoch.toString()+'.jpg')
       });
 
       response = await dio.post(rota,

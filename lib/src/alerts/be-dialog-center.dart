@@ -1,4 +1,4 @@
-import 'package:bestapp_package/src/alerts/dialogs/dialog-content/be-dialog-content.dart';
+import 'package:bestapp_package/src/alerts/dialog-content/be-dialog-content.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as math;
 

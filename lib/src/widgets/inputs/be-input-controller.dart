@@ -37,6 +37,7 @@ class BeInputController extends StatefulWidget {
   final bool readOnly;
   final bool enableInteractiveSelection;
   final EdgeInsetsGeometry padding;
+  final bool validator;
   
   BeInputController({
     this.controller, 
@@ -54,7 +55,8 @@ class BeInputController extends StatefulWidget {
     this.onPrefixTap,
     this.padding,
     this.enableInteractiveSelection=true,
-    this.readOnly=false
+    this.readOnly=false,
+    this.validator=false,
   });
 
   @override
@@ -69,7 +71,7 @@ class _BeInputControllerState extends State<BeInputController> {
       padding: widget.padding != null ? widget.padding :  EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: TextFormField(
         validator: (value) {
-          if (value.isEmpty) {
+          if (value.isEmpty && widget.validator) {
             return 'Campo não pode estar vazio!';
           }
           return null;

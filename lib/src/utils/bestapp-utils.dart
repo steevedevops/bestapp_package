@@ -1,6 +1,5 @@
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 class BestappUtils {
   
   /// Remover caracteres especiais (ex: `/`, `-`, `.`)
@@ -14,5 +13,16 @@ class BestappUtils {
     assert(valor.isNotEmpty);
     final value = double.tryParse(valor.replaceAll('R\$ ', '').replaceAll('.', '').replaceAll(',', '.'));
     return value ?? 0;
+  }
+
+  /// Formatar resultado String no valor em real com o simbolo `R$`
+  static String formatCurrencyPTBR({@required String value, bool compact = false}) {
+    assert(value.isNotEmpty);
+    double temp = double.parse(value);
+    if(compact){
+      return NumberFormat.compactCurrency(symbol: "R\$", decimalDigits: 2, locale: "pt-br").format(temp).toString();
+    }else{
+      return NumberFormat.currency(symbol: "R\$", decimalDigits: 2, locale: "pt-br").format(temp).toString();
+    }
   }
 }

@@ -1,4 +1,3 @@
-import 'package:bestapp_package/bestapp_package.dart';
 import 'package:flutter/material.dart';
 
 // Usuando <T> para permitir ele soportar eses tipo de tipo
@@ -29,6 +28,7 @@ class BeinputDropdownController<T> extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final double width;
   final IconData prefixIcon;
+  final bool validator;
 
   BeinputDropdownController({
     this.hintText = 'Selecione sua Opção',
@@ -39,7 +39,8 @@ class BeinputDropdownController<T> extends StatelessWidget {
     this.fulwidth = true,
     this.padding,
     this.width,
-    this.prefixIcon
+    this.prefixIcon,
+    this.validator=false,
   });
 
   @override
@@ -48,11 +49,19 @@ class BeinputDropdownController<T> extends StatelessWidget {
       width: fulwidth ? MediaQuery.of(context).size.width : width,
       padding: padding != null ? padding :  EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: FormField<T>(
+        validator: (value) {
+          if(validator){
+            return null;
+          }else{
+            return '';
+          }
+        },
         builder: (FormFieldState<T> state) {
           return InputDecorator(
             decoration: InputDecoration(
               prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
-              hintText:  hintText ?? hintText
+              hintText:  hintText ?? hintText,
+              errorText: validator ? null : 'Campo não pode estar vazio!'
             ),
             isEmpty:  value == null || value == '',
             child: DropdownButtonHideUnderline(

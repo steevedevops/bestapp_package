@@ -12,6 +12,7 @@ export 'src/widgets/cards/be-card-selected.dart';
 export 'src/widgets/component/be-separate.dart';
 export 'src/widgets/loading/be-load-circular.dart';
 export 'src/widgets/loading/be-modal-progress-full.dart';
+export 'src/widgets/avatars/be-avatar.dart';
 
 export 'src/widgets/buttons/be-button.dart';
 export 'src/widgets/buttons/be-button-outline.dart';
@@ -22,6 +23,7 @@ export 'src/widgets/appbar/be-appbar.dart';
 export 'src/widgets/appbar/be-appbar-pref.dart';
 export 'src/widgets/inputs/be-input-controller.dart';
 export 'src/widgets/inputs/be-input-dropdown-controller.dart';
+export 'src/widgets/inputs/be-input-autocomplete-controller.dart';
 
 // Border
 export 'src/widgets/component/border/be-border.dart';

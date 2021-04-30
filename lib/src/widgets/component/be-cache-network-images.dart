@@ -3,6 +3,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+/// Class deprecated need to use 
+// Container(
+//   width: 90.0,
+//   child: BeAvatar(backgroundImage: _.profileImobiliariaList[index].fotoprofile != null ?
+//     NetworkImage('url') : null,
+//     child: Text('Ds'),
+//   )
+// )
+@deprecated
 class BecacheNetworkImages extends StatelessWidget {
 
   final String imageUrl;

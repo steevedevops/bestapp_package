@@ -43,7 +43,7 @@ class PlaceService{
     PlacesDetailsResponse placeInfo = await _places.getDetailsByPlaceId(place.placeId);
     return  Coordinates(placeInfo.result.geometry.location.lat, placeInfo.result.geometry.location.lng);
   }
-  
+
   Future<AddressMdl> placesSearch({@required BuildContext context, @required googleApiKey, String lang, String country, Widget textInfo}) async {
     GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: googleApiKey);
     LocationPermission permission = await Geolocator.checkPermission();

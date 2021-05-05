@@ -56,7 +56,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
      },
    ),
 
-
+    // LOCAL
    // Idea de como seria la funciona que deseas mapear en el objeto 
    static List<User> getSuggestions(String query){
     print(query);
@@ -69,26 +69,51 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
       return userLower.contains(queryLower);
     }).toList();
   }
+
+
+  // API
+  class UserApi {
+  static Future<List<User>> getUserSuggestions(String query) async {
+    final url = Uri.parse('https://jsonplaceholder.typicode.com/users');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List users = json.decode(response.body);
+
+      return users.map((json) => User.fromJson(json)).where((user) {
+        final nameLower = user.name.toLowerCase();
+        final queryLower = query.toLowerCase();
+
+        return nameLower.contains(queryLower);
+      }).toList();
+    } else {
+      throw Exception();
+    }
+  }
  * **/
 
 class BeInputAutocompleteController<T>  extends StatelessWidget {
   final TextEditingController controller;
   final SuggestionsCallback<T> suggestionsCallback;
   final ItemBuilder<T> itemBuilder;
-  final bool showNoitemsFoundBuilder;
+  final bool hideOnEmpty;
   final Widget noItemsFoundBuilder;
   final bool validator;
   final void Function(T) onSuggestionSelected;
+  final bool hideOnLoading;
+  final String hintText;
 
    BeInputAutocompleteController({
     Key key,
     this.controller,
     @required this.suggestionsCallback,
     @required this.itemBuilder,
-    this.showNoitemsFoundBuilder = false,
+    this.hideOnEmpty = false,
     this.noItemsFoundBuilder,
     this.validator=false,
-    @required this.onSuggestionSelected
+    this.hideOnLoading = false,
+    @required this.onSuggestionSelected,
+    this.hintText = ''
   }) : super(key: key);
 
   @override
@@ -100,15 +125,20 @@ class BeInputAutocompleteController<T>  extends StatelessWidget {
           controller: controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            hintText: 'Search Username',
+            hintText: hintText,
           ),
         ),
         suggestionsCallback: suggestionsCallback,
         itemBuilder: itemBuilder,
-        noItemsFoundBuilder: showNoitemsFoundBuilder ? 
-        (context) => noItemsFoundBuilder :
-        (context) => Container(
-          height: 0,
+        hideOnEmpty: hideOnEmpty,
+        noItemsFoundBuilder: (context) => noItemsFoundBuilder,
+        hideOnLoading: hideOnLoading,
+        loadingBuilder: (context) => Container(
+          height: 2,
+          child:LinearProgressIndicator(
+            backgroundColor: Theme.of(context).primaryColor,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white)
+          ),
         ),
         validator: (value){
           if(value.isEmpty && validator){

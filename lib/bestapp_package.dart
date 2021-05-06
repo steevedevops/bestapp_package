@@ -1,11 +1,11 @@
 library bestapp_package;
 
 // Services
-export 'src/services/address-services.dart';
-export 'src/services/api-services.dart';
-export 'src/services/geo_service.dart';
-export 'src/services/mdl-api.dart';
-export 'src/services/place_services.dart';
+export 'src/services/google/address-services.dart';
+export 'src/services/api/api-services.dart';
+export 'src/services/google/geo_service.dart';
+export 'src/services/api/mdl-api.dart';
+export 'src/services/google/place_services.dart';
 
 // Widget
 export 'src/widgets/cards/be-card-selected.dart';
@@ -18,7 +18,6 @@ export 'src/widgets/buttons/be-button.dart';
 export 'src/widgets/buttons/be-button-outline.dart';
 export 'src/widgets/buttons/be-button-outline-icon.dart';
 export 'src/widgets/buttons/be-button-icon.dart';
-export 'src/widgets/component/be-cache-network-images.dart';
 export 'src/widgets/appbar/be-appbar.dart';
 export 'src/widgets/appbar/be-appbar-pref.dart';
 export 'src/widgets/inputs/be-input-controller.dart';
@@ -44,3 +43,4 @@ export 'src/utils/getbytes-fromasset.dart';
 //Exports useful packages
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:flutter_svg/svg.dart';
+export 'package:provider/provider.dart';

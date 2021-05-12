@@ -13,6 +13,7 @@ class BebuttonOutline extends StatelessWidget {
   final bool showShadowColor;
   final double elevation;
   final double borderRadius;
+  final Color buttomColor;
   
 
   BebuttonOutline({
@@ -27,6 +28,7 @@ class BebuttonOutline extends StatelessWidget {
     this.shadowColor,
     this.showShadowColor=false,
     this.elevation,
+    this.buttomColor,
     this.borderRadius = 10
   });
 
@@ -41,8 +43,8 @@ class BebuttonOutline extends StatelessWidget {
         child: OutlinedButton(                            
         style: ButtonStyle(
           overlayColor: overlayColor != null && showOverlayColor ? MaterialStateProperty.all(overlayColor) : showOverlayColor ? MaterialStateProperty.all(Theme.of(context).buttonColor.withOpacity(0.1)) : null,
-          foregroundColor: MaterialStateProperty.all(Theme.of(context).buttonColor),
-          side: MaterialStateProperty.all(BorderSide(width: 2, color: Theme.of(context).buttonColor)),
+          foregroundColor: buttomColor != null ? MaterialStateProperty.all(buttomColor) : MaterialStateProperty.all(Theme.of(context).buttonColor),
+          side: buttomColor != null ? MaterialStateProperty.all(BorderSide(width: 2, color: buttomColor)) : MaterialStateProperty.all(BorderSide(width: 2, color: Theme.of(context).buttonColor)),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(borderRadius),

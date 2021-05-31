@@ -38,7 +38,9 @@ class BeInputController extends StatefulWidget {
   final bool enableInteractiveSelection;
   final EdgeInsetsGeometry padding;
   final bool validator;
-  
+  final Function(String) onChanged;  
+  final Color fillColor;
+
   BeInputController({
     this.controller, 
     this.width,
@@ -57,6 +59,8 @@ class BeInputController extends StatefulWidget {
     this.enableInteractiveSelection=true,
     this.readOnly=false,
     this.validator=false,
+    this.onChanged,
+    this.fillColor
   });
 
   @override
@@ -76,6 +80,7 @@ class _BeInputControllerState extends State<BeInputController> {
           }
           return null;
         },
+        onChanged: widget.onChanged,
         controller: widget.controller,
         enabled:  widget.enable,
         readOnly: widget.readOnly,
@@ -85,6 +90,7 @@ class _BeInputControllerState extends State<BeInputController> {
         inputFormatters: defineTypeformatters(widget.typeInput),
         keyboardType: defineTypeInput(widget.typeInput),
         decoration: new InputDecoration(
+          fillColor: widget.fillColor != null ? widget.fillColor : null,
           suffixIcon:  widget.suffixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP) ?
           IconButton(
             icon: Icon(widget.suffixIcon), 

@@ -32,7 +32,10 @@ class BeAppbar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         backgroundColor: bgColor != null ? bgColor : null,
         leading: IconButton(
-          icon: Icon(leadingIcon), 
+          icon: Icon(
+            leadingIcon,
+            color: Theme.of(context).buttonColor,
+          ), 
           onPressed: leadingAction
         ),
         title: title,

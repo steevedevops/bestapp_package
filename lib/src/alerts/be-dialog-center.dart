@@ -32,7 +32,8 @@ Future<void>beDialogCenter({
   Function okTaped,
   String cancelText='Cancelar',
   Function cancelTaped,
-  int transitionDuration=300
+  int transitionDuration=300,
+  double height = 300
 }) async {
 
   DialogTypeAnimation.DEFAULT == dialogTypeAnimation || dialogTypeAnimation == null ?
@@ -44,7 +45,7 @@ Future<void>beDialogCenter({
     builder: (context) {
       return  BeDialogContent(
         title: title,
-        message: message,
+        message: 'message',
         okTaped: okTaped,
         cancelTaped: cancelTaped,
         okText: okText,
@@ -82,6 +83,7 @@ Future<void>beDialogCenter({
           child: BeDialogContent(
             title: title,
             message: message,
+            height: height,
             okTaped: okTaped,
             cancelTaped: cancelTaped,
             okText: okText,

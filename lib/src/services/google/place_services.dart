@@ -7,7 +7,7 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:toast/toast.dart';
 class PlaceService{
 
-  static Future<Coordinates> placesSearchCoordinates({@required BuildContext context, @required googleApiKey, String lang, String country, Widget textInfo}) async {
+  static Future<Coordinates> placesSearchCoordinates({@required BuildContext context, @required googleApiKey, String lang, String country, Widget textInfo}) async {  
     GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: googleApiKey);
     LocationPermission permission = await Geolocator.checkPermission();
 

@@ -8,6 +8,7 @@ class BeDialogContent extends StatelessWidget {
   final Function okTaped;
   final String cancelText;
   final Function cancelTaped;
+  final double height;
 
   BeDialogContent({
     @required this.message,
@@ -15,7 +16,8 @@ class BeDialogContent extends StatelessWidget {
     this.okTaped,
     this.cancelTaped,
     this.okText,
-    this.cancelText
+    this.cancelText,
+    this.height
   });
   
   @override
@@ -23,7 +25,7 @@ class BeDialogContent extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: Container(
-        height: 300,
+        height: height != null ? height : 300,
         width: 400,
         child: Column(
           children:[

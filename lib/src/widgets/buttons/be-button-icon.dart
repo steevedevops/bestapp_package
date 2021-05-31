@@ -8,6 +8,7 @@ class BebuttonIcon extends StatelessWidget {
   final Function onPressed;
   final bool large;
   final Color overlayColor;
+  final Color bgColor;
   final bool showOverlayColor;
   final Color shadowColor;
   final bool showShadowColor;
@@ -28,6 +29,7 @@ class BebuttonIcon extends StatelessWidget {
     this.showShadowColor=false,
     this.elevation,
     this.borderRadius = 10,
+    this.bgColor,
     @required this.icon,
   });
 
@@ -42,7 +44,7 @@ class BebuttonIcon extends StatelessWidget {
         child: ElevatedButton.icon(                            
         style: ButtonStyle(
           overlayColor: overlayColor != null && showOverlayColor ? MaterialStateProperty.all(overlayColor) : showOverlayColor ? MaterialStateProperty.all(Theme.of(context).buttonColor.withOpacity(0.1)) : null,
-          backgroundColor: MaterialStateProperty.all(Theme.of(context).buttonColor),
+          backgroundColor: bgColor != null ? MaterialStateProperty.all(bgColor) : MaterialStateProperty.all(Theme.of(context).buttonColor),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(borderRadius),

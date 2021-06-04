@@ -27,6 +27,7 @@ class BeInputController extends StatefulWidget {
   final IconData suffixIcon;
   final IconData prefixIcon;
   final hintText;
+  final labelText;
   final bool enable;
   final bool obscure;
   final TypeInput typeInput;
@@ -40,12 +41,21 @@ class BeInputController extends StatefulWidget {
   final bool validator;
   final Function(String) onChanged;  
   final Color fillColor;
+  final bool centerText;
+  final TextStyle hintStyle;
+  final TextStyle labelStyle;
+  final EdgeInsetsGeometry contentPadding;
+  final bool showBorder;
+  final Widget prefix;
+  final double borderRadius;
+
 
   BeInputController({
     this.controller, 
     this.width,
     this.fulwidth = true,
     this.hintText, 
+    this.labelText,
     this.suffixIcon,
     this.prefixIcon,
     this.enable=true,
@@ -60,7 +70,14 @@ class BeInputController extends StatefulWidget {
     this.readOnly=false,
     this.validator=false,
     this.onChanged,
-    this.fillColor
+    this.centerText=false,
+    this.fillColor,
+    this.labelStyle,
+    this.hintStyle,
+    this.contentPadding,
+    this.showBorder=true,
+    this.prefix,
+    this.borderRadius
   });
 
   @override
@@ -82,6 +99,7 @@ class _BeInputControllerState extends State<BeInputController> {
         },
         onChanged: widget.onChanged,
         controller: widget.controller,
+        textAlign: widget.centerText ? TextAlign.center : TextAlign.start, 
         enabled:  widget.enable,
         readOnly: widget.readOnly,
         enableInteractiveSelection: widget.enableInteractiveSelection,
@@ -90,7 +108,17 @@ class _BeInputControllerState extends State<BeInputController> {
         inputFormatters: defineTypeformatters(widget.typeInput),
         keyboardType: defineTypeInput(widget.typeInput),
         decoration: new InputDecoration(
+          prefix: widget.prefix != null ? widget.prefix : null,
+          border: widget.showBorder && widget.borderRadius == null ? null : 
+          OutlineInputBorder(
+            borderRadius: widget.borderRadius != null ? BorderRadius.circular(widget.borderRadius) : BorderRadius.circular(1.0),
+            borderSide: widget.showBorder ? BorderSide()
+            : BorderSide.none
+          ),
+          contentPadding : widget.contentPadding != null ? widget.contentPadding : EdgeInsets.only(top: 0, bottom: 0, left: 0, right: 0),
+          floatingLabelBehavior:FloatingLabelBehavior.auto,
           fillColor: widget.fillColor != null ? widget.fillColor : null,
+          filled: widget.fillColor != null ? true : false,
           suffixIcon:  widget.suffixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP) ?
           IconButton(
             icon: Icon(widget.suffixIcon), 
@@ -103,7 +131,16 @@ class _BeInputControllerState extends State<BeInputController> {
             onPressed: widget.onPrefixTap,
           ) : widget.prefixIcon != null ? 
           Icon(widget.prefixIcon) : null,
-          hintText:  widget.hintText ?? widget.hintText
+          labelText: widget.labelText,
+          hintText:  widget.hintText ?? widget.hintText,
+          hintStyle: TextStyle(
+            fontSize: 15,
+          ),
+          labelStyle: widget.hintStyle != null ? 
+            widget.hintStyle 
+          : TextStyle(
+              fontSize: 15,
+            ),
         )
       ),
     );

@@ -46,7 +46,7 @@ class BebuttonOutline extends StatelessWidget {
         style: ButtonStyle(
           overlayColor: overlayColor != null && showOverlayColor ? MaterialStateProperty.all(overlayColor) : showOverlayColor ? MaterialStateProperty.all(Theme.of(context).buttonColor.withOpacity(0.1)) : null,
           foregroundColor: buttomColor != null ? MaterialStateProperty.all(buttomColor) : MaterialStateProperty.all(Theme.of(context).buttonColor),
-          side: buttomColor != null ? MaterialStateProperty.all(borderSide != null ? BorderSide(width: borderSide, color: buttomColor) : BorderSide(width: 1, color: buttomColor)) : MaterialStateProperty.all(BorderSide(width: 1, color: Theme.of(context).buttonColor)),
+          side: buttomColor != null ? MaterialStateProperty.all(borderSide != null ? BorderSide(width: borderSide, color: buttomColor) : BorderSide(width: 1, color: buttomColor)) : MaterialStateProperty.all(borderSide != null ? BorderSide(width: borderSide, color: Theme.of(context).buttonColor) : BorderSide(width: 1, color: Theme.of(context).buttonColor)),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(borderRadius),

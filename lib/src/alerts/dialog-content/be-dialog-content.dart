@@ -9,6 +9,8 @@ class BeDialogContent extends StatelessWidget {
   final String cancelText;
   final Function cancelTaped;
   final double height;
+  final IconData iconMsg;
+  final Color icColor;
 
   BeDialogContent({
     @required this.message,
@@ -17,7 +19,9 @@ class BeDialogContent extends StatelessWidget {
     this.cancelTaped,
     this.okText,
     this.cancelText,
-    this.height
+    this.height,
+    this.iconMsg,
+    this.icColor
   });
   
   @override
@@ -37,7 +41,7 @@ class BeDialogContent extends StatelessWidget {
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))
               ),
               child: Center(
-                child: Icon(Icons.check_circle, size: 150)
+                child: iconMsg != null ? Icon(iconMsg, size: 150, color: icColor) : Icon(Icons.check_circle, size: 150, color: icColor)
               ),
             ),
             Expanded(

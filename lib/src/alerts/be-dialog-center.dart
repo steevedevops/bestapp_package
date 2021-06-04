@@ -22,7 +22,7 @@ beDialogCenter(
   }
 );
 */
-Future<void>beDialogCenter({
+Future<void>BeDialogCenter({
   @required BuildContext context,  
   @required String message,
   bool barrierDismissible=true,
@@ -33,7 +33,9 @@ Future<void>beDialogCenter({
   String cancelText='Cancelar',
   Function cancelTaped,
   int transitionDuration=300,
-  double height = 300
+  double height = 300,
+  IconData iconMsg,
+  Color icColor
 }) async {
 
   DialogTypeAnimation.DEFAULT == dialogTypeAnimation || dialogTypeAnimation == null ?
@@ -45,6 +47,8 @@ Future<void>beDialogCenter({
     builder: (context) {
       return  BeDialogContent(
         title: title,
+        icColor: icColor,
+        iconMsg: iconMsg,
         message: 'message',
         okTaped: okTaped,
         cancelTaped: cancelTaped,
@@ -66,6 +70,8 @@ Future<void>beDialogCenter({
         child: Opacity(
           opacity: anim1.value,
           child: BeDialogContent(
+            icColor: icColor,
+            iconMsg: iconMsg,
             title: title,
             message: message,
             okTaped: okTaped,
@@ -82,6 +88,8 @@ Future<void>beDialogCenter({
           opacity: anim1.value,
           child: BeDialogContent(
             title: title,
+            icColor: icColor,
+            iconMsg: iconMsg,
             message: message,
             height: height,
             okTaped: okTaped,
@@ -98,6 +106,8 @@ Future<void>beDialogCenter({
           opacity: anim1.value,
           child: BeDialogContent(
             title: title,
+            icColor: icColor,
+            iconMsg: iconMsg,
             message: message,
             okTaped: okTaped,
             cancelTaped: cancelTaped,
@@ -106,6 +116,8 @@ Future<void>beDialogCenter({
           ),
         ),
       ) : BeDialogContent(
+        icColor: icColor,
+        iconMsg: iconMsg,
         title: title,
         message: message,
         okTaped: okTaped,

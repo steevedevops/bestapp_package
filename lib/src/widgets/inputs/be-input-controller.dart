@@ -115,7 +115,7 @@ class _BeInputControllerState extends State<BeInputController> {
             borderSide: widget.showBorder ? BorderSide()
             : BorderSide.none
           ),
-          contentPadding : widget.contentPadding != null ? widget.contentPadding : EdgeInsets.only(top: 0, bottom: 0, left: 0, right: 0),
+          contentPadding : widget.contentPadding != null ? widget.contentPadding : null,
           floatingLabelBehavior:FloatingLabelBehavior.auto,
           fillColor: widget.fillColor != null ? widget.fillColor : null,
           filled: widget.fillColor != null ? true : false,

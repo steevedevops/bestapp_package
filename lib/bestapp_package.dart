@@ -43,6 +43,11 @@ export 'src/utils/compress-images.dart';
 export 'src/utils/folderapp-docdir.dart';
 export 'src/utils/getbytes-fromasset.dart';
 
+
+// Validators
+export 'src/validators/cnpj_validator.dart';
+export 'src/validators/cpf_validator.dart';
+
 //Exports useful packages
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:flutter_svg/svg.dart';

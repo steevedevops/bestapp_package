@@ -11,7 +11,7 @@ class BestappUtils {
   /// Converter o valor de uma String com `R$`
   static double converterMoedaParaDouble(String valor) {
     assert(valor.isNotEmpty);
-    final value = double.tryParse(valor.replaceAll('R\$ ', '').replaceAll('.', '').replaceAll(',', '.'));
+    final value = double.tryParse(valor.replaceAll('R\$', '').replaceAll('.', '').replaceAll(',', '.'));
     return value ?? 0;
   }
 
@@ -24,5 +24,13 @@ class BestappUtils {
     }else{
       return NumberFormat.currency(symbol: "R\$", decimalDigits: 2, locale: "pt-br").format(temp).toString();
     }
+  }
+
+  static String obterCep(String cep, {bool ponto = false}) {
+    assert(cep.length == 8, 'CEP com tamanho inválido. Deve conter 8 caracteres');
+
+    return ponto
+        ? '${cep.substring(0, 2)}.${cep.substring(2, 5)}-${cep.substring(5, 8)}'
+        : '${cep.substring(0, 2)}${cep.substring(2, 5)}-${cep.substring(5, 8)}';
   }
 }

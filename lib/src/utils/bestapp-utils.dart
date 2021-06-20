@@ -1,3 +1,5 @@
+import 'package:bestapp_package/src/validators/cnpj_validator.dart';
+import 'package:bestapp_package/src/validators/cpf_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 class BestappUtils {
@@ -32,5 +34,25 @@ class BestappUtils {
     return ponto
         ? '${cep.substring(0, 2)}.${cep.substring(2, 5)}-${cep.substring(5, 8)}'
         : '${cep.substring(0, 2)}${cep.substring(2, 5)}-${cep.substring(5, 8)}';
+  }
+
+  /// Retorna o CPF utilizando a máscara: `XXX.YYY.ZZZ-NN`
+  static String obterCpf(String cpf) {
+    // assert(CPFValidator.isValid(cpf), 'CPF inválido!');
+    return CPFValidator.format(cpf);
+  }
+
+  /// Retorna o CNPJ informado, utilizando a máscara: `XX.YYY.ZZZ/NNNN-SS`
+  static String obterCnpj(String cnpj) {
+    // assert(CNPJValidator.isValid(cnpj), 'CNPJ inválido!');
+    return CNPJValidator.format(cnpj);
+  }
+
+  static String obterCPFCNPJ(String value) {    
+    if(value.length <=11){      
+      return CPFValidator.format(value);
+    }else{      
+      return CNPJValidator.format(value);
+    }
   }
 }

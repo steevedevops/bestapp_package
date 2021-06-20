@@ -122,7 +122,7 @@ class _BeInputControllerState extends State<BeInputController> {
           floatingLabelBehavior:FloatingLabelBehavior.auto,
           fillColor: widget.fillColor != null ? widget.fillColor : null,
           filled: widget.fillColor != null ? true : false,
-          suffixIcon:  widget.suffixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP) ?
+          suffixIcon:  widget.suffixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP || widget.typeInput == TypeInput.EMAIL) ?
           IconButton(
             icon: Icon(widget.suffixIcon), 
             onPressed: widget.onSuffixTap

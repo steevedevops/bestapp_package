@@ -123,11 +123,18 @@ class _BeInputControllerState extends State<BeInputController> {
           fillColor: widget.fillColor != null ? widget.fillColor : null,
           filled: widget.fillColor != null ? true : false,
           suffixIcon:  widget.suffixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP || widget.typeInput == TypeInput.EMAIL) ?
-          IconButton(
-            icon: Icon(widget.suffixIcon), 
-            onPressed: widget.onSuffixTap
-          ) : widget.suffixIcon != null ? 
-          Icon(widget.suffixIcon) : null,
+          
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: IconButton(
+              icon: Icon(widget.suffixIcon),
+              iconSize: 20, 
+              onPressed: widget.onSuffixTap
+            )) : widget.suffixIcon != null ? 
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            child: Icon(widget.suffixIcon, size: 20),
+          ) : null,
           prefixIcon:  widget.prefixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP) ?
           IconButton(
             icon: Icon(widget.prefixIcon),

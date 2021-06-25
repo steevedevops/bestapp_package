@@ -134,7 +134,7 @@ class _BeInputControllerState extends State<BeInputController> {
           labelText: widget.labelText,
           hintText:  widget.hintText ?? widget.hintText,
           hintStyle: TextStyle(
-            fontSize: 13,
+            fontSize: 15,
           ),
           labelStyle: widget.labelStyle != null ? 
             widget.labelStyle 

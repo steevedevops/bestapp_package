@@ -48,11 +48,13 @@ class BeInputController extends StatefulWidget {
   final bool showBorder;
   final Widget prefix;
   final double borderRadius;
+  final double height;
 
 
   BeInputController({
     this.controller, 
     this.width,
+    this.height,
     this.fulwidth = true,
     this.hintText, 
     this.labelText,
@@ -89,6 +91,7 @@ class _BeInputControllerState extends State<BeInputController> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.fulwidth ? MediaQuery.of(context).size.width : widget.width,
+      height: widget.height != null ? widget.height : null,
       padding: widget.padding != null ? widget.padding :  EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: TextFormField(
         validator: (value) {

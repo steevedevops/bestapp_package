@@ -47,6 +47,7 @@ class BeInputController extends StatefulWidget {
   final EdgeInsetsGeometry contentPadding;
   final bool showBorder;
   final Widget prefix;
+  final Widget suffix;
   final double borderRadius;
   final double height;
 
@@ -79,6 +80,7 @@ class BeInputController extends StatefulWidget {
     this.contentPadding,
     this.showBorder=true,
     this.prefix,
+    this.suffix,
     this.borderRadius
   });
 
@@ -125,8 +127,8 @@ class _BeInputControllerState extends State<BeInputController> {
           floatingLabelBehavior:FloatingLabelBehavior.auto,
           fillColor: widget.fillColor != null ? widget.fillColor : null,
           filled: widget.fillColor != null ? true : false,
+          suffix: widget.suffix,
           suffixIcon:  widget.suffixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP || widget.typeInput == TypeInput.EMAIL) ?
-          
           Padding(
             padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
             child: IconButton(

@@ -50,6 +50,8 @@ class BeInputController extends StatefulWidget {
   final Widget suffix;
   final double borderRadius;
   final double height;
+  final TextStyle style;
+  final Color iconColor;
 
 
   BeInputController({
@@ -81,7 +83,9 @@ class BeInputController extends StatefulWidget {
     this.showBorder=true,
     this.prefix,
     this.suffix,
-    this.borderRadius
+    this.borderRadius,
+    this.style,
+    this.iconColor
   });
 
   @override
@@ -109,7 +113,8 @@ class _BeInputControllerState extends State<BeInputController> {
         readOnly: widget.readOnly,
         enableInteractiveSelection: widget.enableInteractiveSelection,
         showCursor: true,
-        style: TextStyle(
+        style: widget.style != null ? widget.style
+        : TextStyle(
           fontSize: 13,
         ),
         obscureText: widget.typeInput == TypeInput.PASSWORD && widget.obscure ? true : false,
@@ -134,11 +139,12 @@ class _BeInputControllerState extends State<BeInputController> {
             child: IconButton(
               icon: Icon(widget.suffixIcon),
               iconSize: 20, 
+              color: widget.iconColor != null ? widget.iconColor : null,
               onPressed: widget.onSuffixTap
             )) : widget.suffixIcon != null ? 
           Padding(
             padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Icon(widget.suffixIcon, size: 20),
+            child: Icon(widget.suffixIcon, size: 20, color: widget.iconColor != null ? widget.iconColor : null),
           ) : null,
           prefixIcon:  widget.prefixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP) ?
           IconButton(
@@ -148,7 +154,8 @@ class _BeInputControllerState extends State<BeInputController> {
           Icon(widget.prefixIcon) : null,
           labelText: widget.labelText,
           hintText:  widget.hintText ?? widget.hintText,
-          hintStyle: TextStyle(
+          hintStyle: widget.hintStyle != null ? widget.hintStyle 
+            : TextStyle(
             fontSize: 13,
           ),
           labelStyle: widget.labelStyle != null ? 

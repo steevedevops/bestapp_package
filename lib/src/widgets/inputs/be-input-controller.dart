@@ -52,6 +52,7 @@ class BeInputController extends StatefulWidget {
   final double height;
   final TextStyle style;
   final Color iconColor;
+  final EdgeInsetsGeometry sufixIconpadding;
 
 
   BeInputController({
@@ -85,6 +86,7 @@ class BeInputController extends StatefulWidget {
     this.suffix,
     this.borderRadius,
     this.style,
+    this.sufixIconpadding,
     this.iconColor
   });
 
@@ -143,7 +145,7 @@ class _BeInputControllerState extends State<BeInputController> {
               onPressed: widget.onSuffixTap
             )) : widget.suffixIcon != null ? 
           Padding(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            padding: widget.sufixIconpadding != null ? widget.sufixIconpadding : EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Icon(widget.suffixIcon, size: 20, color: widget.iconColor != null ? widget.iconColor : null),
           ) : null,
           prefixIcon:  widget.prefixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP) ?

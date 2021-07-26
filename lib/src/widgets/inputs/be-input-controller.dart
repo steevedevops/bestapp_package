@@ -104,9 +104,6 @@ class _BeInputControllerState extends State<BeInputController> {
         readOnly: widget.readOnly,
         enableInteractiveSelection: widget.enableInteractiveSelection,
         showCursor: true,
-        style: TextStyle(
-          fontSize: 13,
-        ),
         obscureText: widget.typeInput == TypeInput.PASSWORD && widget.obscure ? true : false,
         inputFormatters: defineTypeformatters(widget.typeInput),
         keyboardType: defineTypeInput(widget.typeInput),
@@ -137,7 +134,7 @@ class _BeInputControllerState extends State<BeInputController> {
           labelText: widget.labelText,
           hintText:  widget.hintText ?? widget.hintText,
           hintStyle: TextStyle(
-            fontSize: 13,
+            fontSize: 15,
           ),
           labelStyle: widget.labelStyle != null ? 
             widget.labelStyle 

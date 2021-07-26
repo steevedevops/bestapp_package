@@ -47,12 +47,18 @@ class BeInputController extends StatefulWidget {
   final EdgeInsetsGeometry contentPadding;
   final bool showBorder;
   final Widget prefix;
+  final Widget suffix;
   final double borderRadius;
+  final double height;
+  final TextStyle style;
+  final Color iconColor;
+  final EdgeInsetsGeometry sufixIconpadding;
 
 
   BeInputController({
     this.controller, 
     this.width,
+    this.height,
     this.fulwidth = true,
     this.hintText, 
     this.labelText,
@@ -77,7 +83,11 @@ class BeInputController extends StatefulWidget {
     this.contentPadding,
     this.showBorder=true,
     this.prefix,
-    this.borderRadius
+    this.suffix,
+    this.borderRadius,
+    this.style,
+    this.sufixIconpadding,
+    this.iconColor
   });
 
   @override
@@ -89,6 +99,7 @@ class _BeInputControllerState extends State<BeInputController> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.fulwidth ? MediaQuery.of(context).size.width : widget.width,
+      height: widget.height != null ? widget.height : null,
       padding: widget.padding != null ? widget.padding :  EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: TextFormField(
         validator: (value) {
@@ -104,6 +115,10 @@ class _BeInputControllerState extends State<BeInputController> {
         readOnly: widget.readOnly,
         enableInteractiveSelection: widget.enableInteractiveSelection,
         showCursor: true,
+        style: widget.style != null ? widget.style
+        : TextStyle(
+          fontSize: 13,
+        ),
         obscureText: widget.typeInput == TypeInput.PASSWORD && widget.obscure ? true : false,
         inputFormatters: defineTypeformatters(widget.typeInput),
         keyboardType: defineTypeInput(widget.typeInput),
@@ -119,12 +134,20 @@ class _BeInputControllerState extends State<BeInputController> {
           floatingLabelBehavior:FloatingLabelBehavior.auto,
           fillColor: widget.fillColor != null ? widget.fillColor : null,
           filled: widget.fillColor != null ? true : false,
-          suffixIcon:  widget.suffixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP) ?
-          IconButton(
-            icon: Icon(widget.suffixIcon), 
-            onPressed: widget.onSuffixTap
-          ) : widget.suffixIcon != null ? 
-          Icon(widget.suffixIcon) : null,
+          suffix: widget.suffix,
+          suffixIcon:  widget.suffixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP || widget.typeInput == TypeInput.EMAIL) ?
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: IconButton(
+              icon: Icon(widget.suffixIcon),
+              iconSize: 20, 
+              color: widget.iconColor != null ? widget.iconColor : null,
+              onPressed: widget.onSuffixTap
+            )) : widget.suffixIcon != null ? 
+          Padding(
+            padding: widget.sufixIconpadding != null ? widget.sufixIconpadding : EdgeInsets.fromLTRB(0, 10, 0, 0),
+            child: Icon(widget.suffixIcon, size: 20, color: widget.iconColor != null ? widget.iconColor : null),
+          ) : null,
           prefixIcon:  widget.prefixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP) ?
           IconButton(
             icon: Icon(widget.prefixIcon),
@@ -133,8 +156,9 @@ class _BeInputControllerState extends State<BeInputController> {
           Icon(widget.prefixIcon) : null,
           labelText: widget.labelText,
           hintText:  widget.hintText ?? widget.hintText,
-          hintStyle: TextStyle(
-            fontSize: 15,
+          hintStyle: widget.hintStyle != null ? widget.hintStyle 
+            : TextStyle(
+            fontSize: 13,
           ),
           labelStyle: widget.labelStyle != null ? 
             widget.labelStyle 

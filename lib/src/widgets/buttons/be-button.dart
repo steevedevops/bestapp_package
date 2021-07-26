@@ -13,6 +13,7 @@ class Bebutton extends StatelessWidget {
   final bool showShadowColor;
   final double elevation;
   final double borderRadius;
+  final Color bgColor;
 
   Bebutton({
     @required this.text,
@@ -26,6 +27,7 @@ class Bebutton extends StatelessWidget {
     this.shadowColor,
     this.showShadowColor=false,
     this.elevation,
+    this.bgColor,
     this.borderRadius = 10
   });
 
@@ -40,7 +42,7 @@ class Bebutton extends StatelessWidget {
         child: ElevatedButton(                            
         style: ButtonStyle(
           overlayColor: overlayColor != null && showOverlayColor ? MaterialStateProperty.all(overlayColor) : showOverlayColor ? MaterialStateProperty.all(Theme.of(context).buttonColor.withOpacity(0.1)) : null,
-          backgroundColor: MaterialStateProperty.all(Theme.of(context).buttonColor),
+          backgroundColor: bgColor != null ? MaterialStateProperty.all(bgColor) : MaterialStateProperty.all(Theme.of(context).buttonColor),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(borderRadius),
@@ -53,8 +55,7 @@ class Bebutton extends StatelessWidget {
         child: Text(text,
           style: textStyle != null ? textStyle
           : TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold
+            fontSize: 14,
           ),
         )
       )

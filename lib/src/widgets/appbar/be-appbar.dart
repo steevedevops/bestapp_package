@@ -39,7 +39,7 @@ class BeAppbar extends StatelessWidget implements PreferredSizeWidget {
         backgroundColor: bgColor != null ? bgColor : null,
         leadingWidth: 30,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
+          padding: const EdgeInsets.only(left: 0.0),
           child: IconButton(
             icon: Icon(
               leadingIcon,

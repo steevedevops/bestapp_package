@@ -117,7 +117,7 @@ class _BeInputControllerState extends State<BeInputController> {
         showCursor: true,
         style: widget.style != null ? widget.style
         : TextStyle(
-          fontSize: 13,
+          fontSize: 15,
         ),
         obscureText: widget.typeInput == TypeInput.PASSWORD && widget.obscure ? true : false,
         inputFormatters: defineTypeformatters(widget.typeInput),
@@ -156,9 +156,9 @@ class _BeInputControllerState extends State<BeInputController> {
           Icon(widget.prefixIcon) : null,
           labelText: widget.labelText,
           hintText:  widget.hintText ?? widget.hintText,
-          hintStyle: widget.hintStyle != null ? widget.hintStyle 
+          hintStyle: widget.hintStyle != null ? widget.hintStyle
             : TextStyle(
-            fontSize: 13,
+            fontSize: 15,
           ),
           labelStyle: widget.labelStyle != null ? 
             widget.labelStyle 

@@ -1,23 +1,32 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiServices{
   final _token;
   final _baseUrl;
-  final _appVersion = "/api/v1/";
+  final _appVersion = "/api/v1/";    
+  static bool _reqSuccess = false;
+  bool get reqSuccess => _reqSuccess;
   Dio dio = new Dio();
-  ApiServices(this._token, @required this._baseUrl);
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  ApiServices(this._token, this._baseUrl);
 
   Future<Map<String, dynamic>> callApi({
     @required metodo,
+    @required BuildContext context,
     @required rota,
+    String redirectTo,
     Map<String, dynamic> params,
     Map<String, dynamic> payload,
+    ProgressCallback onSendProgress
   }) async {
     var response;
+    SharedPreferences prefs = await _prefs;
+
     Map<String, dynamic> headers = {
       "Content-Type": "application/json", 
       "Accept": "application/json"
@@ -26,27 +35,55 @@ class ApiServices{
     dio.options.baseUrl = this._baseUrl+this._appVersion;
     dio.options.headers = headers;
     dio.options.method = metodo;
-    dio.options.responseType = ResponseType.json;
+    dio.options.responseType = ResponseType.json;    
     Map<String, dynamic> jsonReturned = {};
     try {
       response = await dio.request(
         rota,
+        onSendProgress: onSendProgress,
         data: payload,
         queryParameters: params
       );
+      _reqSuccess = true;
       jsonReturned = response.data;
       jsonReturned['statusCode'] = response.statusCode;
-    } catch (e) {
-      jsonReturned = e.response.statusCode == 400 ? e.response.data : e.response.statusCode == 403 ? {'msg': e.response.data['detail']} :  {'msg': 'Ops, tivemos problemas ${e.response.statusCode}!'};
-      jsonReturned['statusCode'] = e.response.statusCode;
+    } on DioError catch (e) {
+      _reqSuccess = false;
+
+      if(e.response != null){        
+        jsonReturned['statusCode'] = e.response.statusCode;
+        switch (e.response.statusCode) {          
+          case 400:
+            jsonReturned = e.response.data;
+            break;
+          case 403: //unauthorized OR forbidden            
+            prefs.remove('sessionid');
+            jsonReturned = {'msg': e.response.data['detail']};
+            Navigator.pushNamed(context, redirectTo != null ? redirectTo : '/login');
+            break;
+          default:
+            jsonReturned = {'msg': 'Ops, tivemos problemas ${e.response.statusCode}!'};
+        }
+      }else{
+        jsonReturned = {'msg': 'Ops, tivemos problemas ${e.message}!'};
+      }      
       return jsonReturned;
     }
     return jsonReturned;
   }
 
-  Future<Map> uploadFile({@required String rota, @required File file, Map<String, dynamic> paramsData}) async {
+  Future<Map> uploadFile({
+    @required String rota, 
+    @required File file,     
+    @required BuildContext context,
+    Map<String, dynamic> paramsData,
+    ProgressCallback onSendProgress,
+    String redirectTo,
+  }) async {        
+    SharedPreferences prefs = await _prefs;
     var dio = new Dio();
     var response;
+    Map<String, dynamic> jsonReturned = {};
 
     if (this._token != null) {        
       dio.options.baseUrl = this._baseUrl+this._appVersion;
@@ -55,23 +92,49 @@ class ApiServices{
         'file': await MultipartFile.fromFile(file.absolute.path, filename: DateTime.now().millisecondsSinceEpoch.toString()+'.jpg')
       });
 
-      response = await dio.post(rota,
+      try {
+        response = await dio.post(
+          rota,
           data: formData,
+          onSendProgress: onSendProgress,
           options: Options(
-              method: 'POST',
-              responseType: ResponseType.json,
-              followRedirects: false,
-              headers: {
-                'Cookie': 'sessionid=${this._token}',
-                'X-Requested-With': 'XMLHttpRequest',
-              }), onSendProgress: (int sent, int total) {
-          print(((sent / total) * 100).toStringAsFixed(0) + " %");
-      });
+            method: 'POST',
+            responseType: ResponseType.json,
+            followRedirects: false,
+            headers: {
+              'Cookie': 'sessionid=${this._token}',
+              'X-Requested-With': 'XMLHttpRequest',
+            }
+          )          
+        );
+        _reqSuccess = true;
+        jsonReturned = response.data;
+        jsonReturned['statusCode'] = response.statusCode;
 
-      Map responseResturn = json.decode(response.toString());
-      responseResturn["statusCode"] = response.statusCode;
-      responseResturn["msg"] = responseResturn['msg'];
-      return responseResturn;
+      } on DioError catch (e) {
+        _reqSuccess = false;
+
+        if(e.response != null){        
+          jsonReturned['statusCode'] = e.response.statusCode;
+          switch (e.response.statusCode) {          
+            case 400:
+              jsonReturned = e.response.data;
+              break;
+            case 403: //unauthorized OR forbidden            
+              prefs.remove('sessionid');
+              jsonReturned = {'msg': e.response.data['detail']};
+              Navigator.pushNamed(context, redirectTo != null ? redirectTo : '/login');
+              break;
+            default:
+              jsonReturned = {'msg': 'Ops, tivemos problemas ${e.response.statusCode}!'};
+          }
+        }else{
+          jsonReturned = {'msg': 'Ops, tivemos problemas ${e.message}!'};
+        }      
+        return jsonReturned;
+      }
+      return jsonReturned;      
     }
+    return null;
   }
 }

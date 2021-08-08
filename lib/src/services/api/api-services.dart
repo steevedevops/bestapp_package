@@ -58,6 +58,8 @@ class ApiServices{
             break;
           case 403: //unauthorized OR forbidden            
             prefs.remove('sessionid');
+            prefs.remove('pkUser');
+            prefs.remove('groupUser');
             jsonReturned = {'msg': e.response.data['detail']};
             Navigator.pushNamed(context, redirectTo != null ? redirectTo : '/login');
             break;
@@ -122,6 +124,8 @@ class ApiServices{
               break;
             case 403: //unauthorized OR forbidden            
               prefs.remove('sessionid');
+            prefs.remove('pkUser');
+            prefs.remove('groupUser');
               jsonReturned = {'msg': e.response.data['detail']};
               Navigator.pushNamed(context, redirectTo != null ? redirectTo : '/login');
               break;

@@ -60,8 +60,9 @@ class ApiServices{
             prefs.remove('sessionid');
             prefs.remove('pkUser');
             prefs.remove('groupUser');
-            jsonReturned = {'msg': e.response.data['detail']};
+            jsonReturned = {'msg': e.response.data['msg']};
             Navigator.pushNamed(context, redirectTo != null ? redirectTo : '/login');
+            return jsonReturned;
             break;
           default:
             jsonReturned = {'msg': 'Ops, tivemos problemas ${e.response.statusCode}!'};

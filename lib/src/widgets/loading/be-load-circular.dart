@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-Widget beloadCircular({BuildContext context, bool colwhite}){
+Widget beloadCircular({Color color}){
   return Center(
     child: CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation<Color>(
-        colwhite == false ? Theme.of(context).primaryColor: Colors.white,
+        color != null ? color : null
       ),
     )
   );

@@ -14,7 +14,9 @@ export 'src/widgets/component/be-separate.dart';
 export 'src/widgets/loading/be-load-circular.dart';
 export 'src/widgets/loading/be-modal-progress-full.dart';
 export 'src/widgets/avatars/be-avatar.dart';
-
+export 'src/widgets/avatars/be-image-cached.dart';
+export 'src/widgets/loading/shimmer-loading/shimmer.dart';
+export 'src/widgets/loading/shimmer-loading/shimmer-loading.dart';
 export 'src/widgets/buttons/be-button.dart';
 export 'src/widgets/buttons/be-button-outline.dart';
 export 'src/widgets/buttons/be-button-outline-icon.dart';
@@ -42,7 +44,7 @@ export 'src/utils/colors-fromhex.dart';
 export 'src/utils/compress-images.dart';
 export 'src/utils/folderapp-docdir.dart';
 export 'src/utils/getbytes-fromasset.dart';
-
+export 'src/utils/preference-utils.dart';
 
 // Validators
 export 'src/validators/cnpj_validator.dart';

@@ -122,6 +122,7 @@ class _BeInputControllerState extends State<BeInputController> {
         obscureText: widget.typeInput == TypeInput.PASSWORD && widget.obscure ? true : false,
         inputFormatters: defineTypeformatters(widget.typeInput),
         keyboardType: defineTypeInput(widget.typeInput),
+        cursorColor: Theme.of(context).primaryColor,
         decoration: new InputDecoration(
           prefix: widget.prefix != null ? widget.prefix : null,
           border: widget.showBorder && widget.borderRadius == null ? null : 
@@ -150,10 +151,14 @@ class _BeInputControllerState extends State<BeInputController> {
           ) : null,
           prefixIcon:  widget.prefixIcon != null && (widget.typeInput == TypeInput.PASSWORD || widget.typeInput == TypeInput.COUNTER || widget.typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.CEP) ?
           IconButton(
-            icon: Icon(widget.prefixIcon),
+            icon: Icon(widget.prefixIcon,
+              color: widget.iconColor != null ? widget.iconColor : null,
+            ),
             onPressed: widget.onPrefixTap,
           ) : widget.prefixIcon != null ? 
-          Icon(widget.prefixIcon) : null,
+          Icon(widget.prefixIcon,
+            color: widget.iconColor != null ? widget.iconColor : null,
+          ) : null,
           labelText: widget.labelText,
           hintText:  widget.hintText ?? widget.hintText,
           hintStyle: widget.hintStyle != null ? widget.hintStyle

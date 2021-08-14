@@ -45,7 +45,7 @@ class ApiServices{
         queryParameters: params
       );
       _reqSuccess = true;
-      jsonReturned = response.data;
+      jsonReturned = (response.data is String) ? {'msg': ''} : response.data;
       jsonReturned['statusCode'] = response.statusCode;
     } on DioError catch (e) {
       _reqSuccess = false;

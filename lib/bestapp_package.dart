@@ -52,7 +52,7 @@ export 'src/validators/cpf_validator.dart';
 
 //Exports useful packages
 export 'package:shared_preferences/shared_preferences.dart';
-export 'package:flutter_svg/svg.dart';
-export 'package:provider/provider.dart';
-export 'package:geocoder/geocoder.dart';
+export 'package:flutter_riverpod/flutter_riverpod.dart';
 export 'package:geolocator/geolocator.dart';
+export 'package:geocoder/geocoder.dart';
+export 'package:flutter_svg/svg.dart';

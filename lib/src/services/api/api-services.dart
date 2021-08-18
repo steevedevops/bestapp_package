@@ -17,7 +17,7 @@ class ApiServices{
 
   Future<Map<String, dynamic>> callApi({
     @required metodo,
-    @required BuildContext context,
+    BuildContext context,
     @required rota,
     String redirectTo,
     Map<String, dynamic> params,

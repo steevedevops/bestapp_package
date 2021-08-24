@@ -3,9 +3,10 @@ library bestapp_package;
 // Services
 export 'src/services/google/address-services.dart';
 export 'src/services/api/api-services.dart';
-export 'src/services/google/geo_service.dart';
+export 'src/services/google/geo_services.dart';
 export 'src/services/api/mdl-api.dart';
 export 'src/services/google/place_services.dart';
+export 'src/services/permission-services.dart';
 
 // Widget
 export 'src/widgets/cards/be-card-selected.dart';
@@ -46,13 +47,16 @@ export 'src/utils/folderapp-docdir.dart';
 export 'src/utils/getbytes-fromasset.dart';
 export 'src/utils/preference-utils.dart';
 
+// some model exported
+export 'src/models/address-model.dart';
+
 // Validators
 export 'src/validators/cnpj_validator.dart';
 export 'src/validators/cpf_validator.dart';
 
 //Exports useful packages
 export 'package:shared_preferences/shared_preferences.dart';
-export 'package:flutter_riverpod/flutter_riverpod.dart';
 export 'package:geolocator/geolocator.dart';
 export 'package:geocoder/geocoder.dart';
+export 'package:geodesy/geodesy.dart';
 export 'package:flutter_svg/svg.dart';

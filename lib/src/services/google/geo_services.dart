@@ -1,26 +1,16 @@
 import 'dart:async';
 import 'package:bestapp_package/src/models/address-model.dart';
+import 'package:bestapp_package/src/services/permission-services.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:geodesy/geodesy.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:toast/toast.dart';
 
 class GeoService{  
-
+  
   static Future<Coordinates> getCurrentPositionCoordinates({BuildContext context}) async {
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-    }
-    if (permission == LocationPermission.deniedForever) {
-      Toast.show(
-        'Permissão de localização negada, por favor, vá em configurações do seu dispositivo e habilite a permissāo de localizaçāo.',
-        context,
-        duration: Toast.LENGTH_LONG,
-        gravity: Toast.TOP
-      );
-    }
-    if (permission == LocationPermission.whileInUse || permission == LocationPermission.always) {
+    bool asPermission = await PermissionService.checkLocationPermission(context: context);
+    if(asPermission)  {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       return  Coordinates(position.latitude, position.longitude);
     }
@@ -28,24 +18,10 @@ class GeoService{
   }
 
   static Future<AddressMdl> getCurrentPosition({BuildContext context}) async {
-    LocationPermission permission = await Geolocator.checkPermission();
-
+    bool asPermission = await PermissionService.checkLocationPermission(context: context);
     AddressMdl addressMdl = new AddressMdl();
 
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      Toast.show(
-        'Permissão de localização negada, por favor, vá em configurações do seu dispositivo e habilite a permissāo de localizaçāo.',
-        context,
-        duration: Toast.LENGTH_LONG,
-        gravity: Toast.TOP
-      );
-    }
-
-    if (permission == LocationPermission.whileInUse || permission == LocationPermission.always) {
+    if (asPermission) {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       var placemarks = await Geocoder.local.findAddressesFromCoordinates(Coordinates(position.latitude, position.longitude));
       if (! placemarks.asMap().containsKey(0))return null;
@@ -59,6 +35,19 @@ class GeoService{
       addressMdl.longitude = placemarks.first.coordinates.longitude;
       addressMdl.latitude = placemarks.first.coordinates.latitude;
       return addressMdl;
+    }
+    return null;
+  }
+
+  static Future<String> getDistanceBetweenlatLng({LatLng latLng, BuildContext context}) async {
+    bool asPermission = await PermissionService.checkLocationPermission(context: context);
+    if (asPermission) {
+      Coordinates coordinates = await getCurrentPositionCoordinates(context: context);
+      num distance = Geodesy().distanceBetweenTwoGeoPoints(LatLng(coordinates.latitude, coordinates.longitude), latLng);
+      
+      // Convertindo de metro para KM
+      double covertTokm = distance / 1000;
+      return '${double.parse(covertTokm.toStringAsFixed(1)).toString()} km';
     }
     return null;
   }

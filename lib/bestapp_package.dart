@@ -49,6 +49,8 @@ export 'src/utils/preference-utils.dart';
 
 // some model exported
 export 'src/models/address-model.dart';
+export 'src/models/place-search-model.dart';
+export 'src/models/place-details-model.dart';
 
 // Validators
 export 'src/validators/cnpj_validator.dart';

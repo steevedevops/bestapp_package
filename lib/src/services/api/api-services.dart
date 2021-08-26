@@ -6,8 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiServices{
   final _token;
-  final _baseUrl;
-  final _appVersion = "/api/v1/";    
+  final _baseUrl;  
   static bool _reqSuccess = false;
   bool get reqSuccess => _reqSuccess;
   Dio dio = new Dio();
@@ -20,6 +19,7 @@ class ApiServices{
     BuildContext context,
     @required rota,
     String redirectTo,
+    String adicionalUrl,
     Map<String, dynamic> params,
     Map<String, dynamic> payload,
     ProgressCallback onSendProgress
@@ -32,7 +32,7 @@ class ApiServices{
       "Accept": "application/json"
     };
     if(_token != '') headers['Cookie'] = 'sessionid=$_token';
-    dio.options.baseUrl = this._baseUrl+this._appVersion;
+    dio.options.baseUrl = '${this._baseUrl}/';
     dio.options.headers = headers;
     dio.options.method = metodo;
     dio.options.responseType = ResponseType.json;    
@@ -89,7 +89,7 @@ class ApiServices{
     Map<String, dynamic> jsonReturned = {};
 
     if (this._token != null) {        
-      dio.options.baseUrl = this._baseUrl+this._appVersion;
+      dio.options.baseUrl = '${this._baseUrl}/';
       FormData formData = new FormData.fromMap({
         ...paramsData,
         'file': await MultipartFile.fromFile(file.absolute.path, filename: DateTime.now().millisecondsSinceEpoch.toString()+'.jpg')

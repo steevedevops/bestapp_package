@@ -115,7 +115,6 @@ class PlaceService{
 
 
   Future<AddressMdl> getAdressByCoordinates({@required BuildContext context, @required double longitude, @required double latitude}) async {
-    ApiServices apiServices = new ApiServices('', 'https://maps.googleapis.com/maps/api');
     AddressMdl addressMdl = new AddressMdl();
     bool asPermission = await PermissionService.checkLocationPermission(context: context);
     

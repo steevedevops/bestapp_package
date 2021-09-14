@@ -57,6 +57,7 @@ class BeInputController extends StatefulWidget {
   final TextStyle style;
   final Color iconColor;
   final EdgeInsetsGeometry sufixIconpadding;
+  final bool autofocus;
 
 
   BeInputController({
@@ -92,7 +93,8 @@ class BeInputController extends StatefulWidget {
     this.borderRadius,
     this.style,
     this.sufixIconpadding,
-    this.iconColor
+    this.iconColor,
+    this.autofocus = false,
   });
 
   @override
@@ -116,6 +118,7 @@ class _BeInputControllerState extends State<BeInputController> {
         onChanged: widget.onChanged,
         onFieldSubmitted: widget.onSubmit,
         controller: widget.controller,
+        autofocus: widget.autofocus,
         textAlign: widget.centerText ? TextAlign.center : TextAlign.start, 
         enabled:  widget.enable,
         readOnly: widget.readOnly,

@@ -58,7 +58,8 @@ class BeInputController extends StatefulWidget {
   final Color iconColor;
   final EdgeInsetsGeometry sufixIconpadding;
   final bool autofocus;
-
+  final TextInputAction textInputAction;
+  final FocusNode focusNode;
 
   BeInputController({
     this.controller, 
@@ -95,6 +96,9 @@ class BeInputController extends StatefulWidget {
     this.sufixIconpadding,
     this.iconColor,
     this.autofocus = false,
+    this.textInputAction,
+    this.focusNode
+
   });
 
   @override
@@ -115,6 +119,8 @@ class _BeInputControllerState extends State<BeInputController> {
           }
           return null;
         },
+        textInputAction: widget.textInputAction,
+        focusNode: widget.focusNode,
         onChanged: widget.onChanged,
         onFieldSubmitted: widget.onSubmit,
         controller: widget.controller,

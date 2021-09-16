@@ -94,9 +94,11 @@ class ApiServices{
 
       List<dynamic> multipartFiles = [];
 
-      for (var i = 0; i < files.length; i++) {
-        var respath = await MultipartFile.fromFile(files[i].path, filename: DateTime.now().millisecondsSinceEpoch.toString()+'.jpg');
-        multipartFiles.add(respath);
+      if(files != null){
+        for (var i = 0; i < files.length; i++) {
+          var respath = await MultipartFile.fromFile(files[i].path, filename: DateTime.now().millisecondsSinceEpoch.toString()+'.jpg');
+          multipartFiles.add(respath);
+        }
       }
 
       FormData formData = new FormData.fromMap({

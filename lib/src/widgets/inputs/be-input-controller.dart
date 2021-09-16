@@ -44,6 +44,7 @@ class BeInputController extends StatefulWidget {
   final bool validator;
   final Function(String) onChanged;  
   final Function(String) onSubmit;
+  final VoidCallback onEditingComplete;
   final Color fillColor;
   final bool centerText;
   final TextStyle hintStyle;
@@ -75,6 +76,7 @@ class BeInputController extends StatefulWidget {
     this.inputFormatters,
     this.keyboardType,
     this.onSuffixTap,
+    this.onEditingComplete,
     this.onPrefixTap,
     this.padding,
     this.enableInteractiveSelection=true,
@@ -117,6 +119,7 @@ class _BeInputControllerState extends State<BeInputController> {
         },
         onChanged: widget.onChanged,
         onFieldSubmitted: widget.onSubmit,
+        onEditingComplete: widget.onEditingComplete,
         controller: widget.controller,
         autofocus: widget.autofocus,
         textAlign: widget.centerText ? TextAlign.center : TextAlign.start, 

@@ -80,6 +80,7 @@ class ApiServices{
     @required File file,     
     @required BuildContext context,
     Map<String, dynamic> paramsData,
+    List<File> files,
     ProgressCallback onSendProgress,
     String redirectTo,
   }) async {        
@@ -90,9 +91,18 @@ class ApiServices{
 
     if (this._token != null) {        
       dio.options.baseUrl = '${this._baseUrl}/';
+
+      List<dynamic> multipartFiles = [];
+
+      for (var i = 0; i < files.length; i++) {
+        var respath = await MultipartFile.fromFile(files[i].path, filename: DateTime.now().millisecondsSinceEpoch.toString()+'.jpg');
+        multipartFiles.add(respath);
+      }
+
       FormData formData = new FormData.fromMap({
         ...paramsData,
-        'file': await MultipartFile.fromFile(file.absolute.path, filename: DateTime.now().millisecondsSinceEpoch.toString()+'.jpg')
+        'file': file != null ? await MultipartFile.fromFile(file.path, filename: DateTime.now().millisecondsSinceEpoch.toString()+'.jpg') : null,
+        'files': multipartFiles
       });
 
       try {

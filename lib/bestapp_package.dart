@@ -39,6 +39,8 @@ export 'src/alerts/be-dialog-toast.dart';
 export 'src/alerts/be-dialog-center.dart';
 export 'src/alerts/dialog-utils.dart';
 
+export 'src/models/enums.dart';
+
 // Utils
 export 'src/utils/bestapp-utils.dart';
 export 'src/utils/colors-fromhex.dart';

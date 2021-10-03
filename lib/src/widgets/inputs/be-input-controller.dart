@@ -2,7 +2,10 @@ import 'package:bestapp_package/src/formatters/br_telefone_input_formatter.dart'
 import 'package:bestapp_package/src/formatters/cep_input_formatter.dart';
 import 'package:bestapp_package/src/formatters/cnpj_input_formatter.dart';
 import 'package:bestapp_package/src/formatters/cpf_input_formatter.dart';
+import 'package:bestapp_package/src/formatters/credit_card_formatter.dart';
 import 'package:bestapp_package/src/formatters/currency_input_formatter.dart';
+import 'package:bestapp_package/src/formatters/mmyy_formatter.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,7 +23,9 @@ enum TypeInput {
   CPF,
   CNPJ,
   CEP,
-  BR_TEL
+  BR_TEL,
+  CREDIT_CARD,
+  MMYY
 }
 
 class BeInputController extends StatefulWidget {
@@ -42,6 +47,8 @@ class BeInputController extends StatefulWidget {
   final bool enableInteractiveSelection;
   final EdgeInsetsGeometry padding;
   final bool validator;
+  final bool emailvalidator;
+  final bool phoneValidator;
   final Function(String) onChanged;  
   final Function(String) onSubmit;
   final VoidCallback onEditingComplete;
@@ -81,7 +88,6 @@ class BeInputController extends StatefulWidget {
     this.padding,
     this.enableInteractiveSelection=true,
     this.readOnly=false,
-    this.validator=false,
     this.onChanged,
     this.onSubmit,
     this.centerText=false,
@@ -97,6 +103,9 @@ class BeInputController extends StatefulWidget {
     this.sufixIconpadding,
     this.iconColor,
     this.autofocus = false,
+    this.validator=false,
+    this.emailvalidator = false,
+    this.phoneValidator = false,
   });
 
   @override
@@ -104,6 +113,13 @@ class BeInputController extends StatefulWidget {
 }
 
 class _BeInputControllerState extends State<BeInputController> {
+  
+  bool isEmail(String input) => EmailValidator.validate(input);
+
+  bool isPhone(String input) => RegExp(
+    r'^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$'
+  ).hasMatch(input);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -114,6 +130,15 @@ class _BeInputControllerState extends State<BeInputController> {
         validator: (value) {
           if (value.isEmpty && widget.validator) {
             return 'Campo não pode estar vazio!';
+          }
+          if (value.isEmpty && widget.validator) {
+            return 'CPF invalido!';
+          }
+          if (!isEmail(value) && !isPhone(value) && widget.emailvalidator && widget.phoneValidator ) {
+            return 'Please enter a valid email or phone number.';
+          }
+          if (!isEmail(value) && widget.emailvalidator && !widget.phoneValidator) {
+            return 'E-mail invalido.';
           }
           return null;
         },
@@ -212,6 +237,18 @@ class _BeInputControllerState extends State<BeInputController> {
         BrtelefoneInputFormatter()
       ];
     }
+    else if(typeInput == TypeInput.CREDIT_CARD){
+      return [
+        FilteringTextInputFormatter.digitsOnly,
+        CreditCardFormatter()
+      ];
+    }
+    else if(typeInput == TypeInput.MMYY){
+      return [
+        FilteringTextInputFormatter.digitsOnly,
+        MMYYFormatter()
+      ];
+    }
     else if(typeInput == TypeInput.CURRENCY){
       return [
         FilteringTextInputFormatter.digitsOnly,
@@ -223,7 +260,7 @@ class _BeInputControllerState extends State<BeInputController> {
   }
 
   TextInputType defineTypeInput(TypeInput typeInput){
-    if(typeInput == TypeInput.CPF || typeInput == TypeInput.CNPJ || typeInput == TypeInput.CEP || typeInput == TypeInput.BR_TEL || typeInput == TypeInput.COUNTER || typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.NUMBER){
+    if(typeInput == TypeInput.MMYY || typeInput == TypeInput.CREDIT_CARD || typeInput == TypeInput.CPF || typeInput == TypeInput.CNPJ || typeInput == TypeInput.CEP || typeInput == TypeInput.BR_TEL || typeInput == TypeInput.COUNTER || typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.NUMBER){
       return TextInputType.number;
     }else if(typeInput == TypeInput.EMAIL){
       return TextInputType.emailAddress;

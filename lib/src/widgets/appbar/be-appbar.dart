@@ -37,7 +37,7 @@ class BeAppbar extends StatelessWidget implements PreferredSizeWidget {
         elevation: elevation != null ? elevation : 0.0,
         centerTitle: centerTitle != null ? centerTitle : true,
         backgroundColor: bgColor != null ? bgColor : null,
-        leadingWidth: 30,
+        // leadingWidth: 30,
         leading: Padding(
           padding: const EdgeInsets.only(left: 0.0),
           child: IconButton(

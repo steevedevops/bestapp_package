@@ -45,15 +45,18 @@ class ApiServices{
         queryParameters: params
       );
       _reqSuccess = true;
-      jsonReturned = (response.data is String) ? {'msg': ''} : response.data;
+      // jsonReturned = (response.data is String) ? {'msg': ''} : (response.data is List) ? {'result': response.data} : response.data;
+      jsonReturned = response.data is List ? {'result': response.data } : response.data;
       jsonReturned['statusCode'] = response.statusCode;
     } on DioError catch (e) {
       _reqSuccess = false;
-
       if(e.response != null){        
         jsonReturned['statusCode'] = e.response.statusCode;
         switch (e.response.statusCode) {          
           case 400:
+            jsonReturned = e.response.data;
+            break;
+          case 401:
             jsonReturned = e.response.data;
             break;
           case 403: //unauthorized OR forbidden            

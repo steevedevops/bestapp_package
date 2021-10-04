@@ -5,6 +5,7 @@ import 'package:bestapp_package/src/formatters/cpf_input_formatter.dart';
 import 'package:bestapp_package/src/formatters/credit_card_formatter.dart';
 import 'package:bestapp_package/src/formatters/currency_input_formatter.dart';
 import 'package:bestapp_package/src/formatters/mmyy_formatter.dart';
+import 'package:cpfcnpj/cpfcnpj.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,8 +48,7 @@ class BeInputController extends StatefulWidget {
   final bool enableInteractiveSelection;
   final EdgeInsetsGeometry padding;
   final bool validator;
-  final bool emailvalidator;
-  final bool phoneValidator;
+  final bool emailPhoneValidator;
   final Function(String) onChanged;  
   final Function(String) onSubmit;
   final VoidCallback onEditingComplete;
@@ -104,8 +104,9 @@ class BeInputController extends StatefulWidget {
     this.iconColor,
     this.autofocus = false,
     this.validator=false,
-    this.emailvalidator = false,
-    this.phoneValidator = false,
+    this.emailPhoneValidator=false
+    // this.emailvalidator = false,
+    // this.phoneValidator = false,
   });
 
   @override
@@ -131,13 +132,16 @@ class _BeInputControllerState extends State<BeInputController> {
           if (value.isEmpty && widget.validator) {
             return 'Campo não pode estar vazio!';
           }
-          if (value.isEmpty && widget.validator) {
+          if (!CPF.isValid(value) && widget.validator && widget.typeInput == TypeInput.CPF) {
             return 'CPF invalido!';
           }
-          if (!isEmail(value) && !isPhone(value) && widget.emailvalidator && widget.phoneValidator ) {
-            return 'Please enter a valid email or phone number.';
+          if (!CNPJ.isValid(value) && widget.validator && widget.typeInput == TypeInput.CNPJ) {
+            return 'CNPJ invalido!';
           }
-          if (!isEmail(value) && widget.emailvalidator && !widget.phoneValidator) {
+          if (!isEmail(value) && !isPhone(value) && widget.emailPhoneValidator) {
+            return 'Por favor, insira um e-mail ou número de telefone válido.';
+          }
+          if (!isEmail(value) && widget.validator && widget.typeInput == TypeInput.EMAIL) {
             return 'E-mail invalido.';
           }
           return null;

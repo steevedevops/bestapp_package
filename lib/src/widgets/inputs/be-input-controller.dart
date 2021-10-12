@@ -163,6 +163,7 @@ class _BeInputControllerState extends State<BeInputController> {
         obscureText: widget.typeInput == TypeInput.PASSWORD && widget.obscure ? true : false,
         inputFormatters: defineTypeformatters(widget.typeInput),
         keyboardType: defineTypeInput(widget.typeInput),
+        maxLines: widget.keyboardType == TextInputType.multiline ? null : 1,
         cursorColor: Theme.of(context).primaryColor,
         decoration: new InputDecoration(
           prefix: widget.prefix != null ? widget.prefix : null,

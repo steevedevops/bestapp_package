@@ -35,7 +35,7 @@ class ApiServices{
     dio.options.baseUrl = '${this._baseUrl}/';
     dio.options.headers = headers;
     dio.options.method = metodo;
-    dio.options.responseType = ResponseType.json;    
+    dio.options.responseType = ResponseType.json;
     Map<String, dynamic> jsonReturned = {};
     try {
       response = await dio.request(
@@ -46,7 +46,7 @@ class ApiServices{
       );
       _reqSuccess = true;
       // jsonReturned = (response.data is String) ? {'msg': ''} : (response.data is List) ? {'result': response.data} : response.data;
-      jsonReturned = response.data is List ? {'result': response.data } : response.data;
+      jsonReturned = response.data is List ? {'result': response.data } : response.data is String ? {'msg': ''} : response.data;
       jsonReturned['statusCode'] = response.statusCode;
     } on DioError catch (e) {
       _reqSuccess = false;

@@ -66,6 +66,7 @@ class BeInputController extends StatefulWidget {
   final Color iconColor;
   final EdgeInsetsGeometry sufixIconpadding;
   final bool autofocus;
+  final TextCapitalization textCapitalization;
 
 
   BeInputController({
@@ -104,7 +105,8 @@ class BeInputController extends StatefulWidget {
     this.iconColor,
     this.autofocus = false,
     this.validator=false,
-    this.emailPhoneValidator=false
+    this.emailPhoneValidator=false,
+    this.textCapitalization= TextCapitalization.none,
     // this.emailvalidator = false,
     // this.phoneValidator = false,
   });
@@ -133,20 +135,21 @@ class _BeInputControllerState extends State<BeInputController> {
             return 'Campo não pode estar vazio!';
           }
           if (!CPF.isValid(value) && widget.validator && widget.typeInput == TypeInput.CPF) {
-            return 'CPF invalido!';
+            return 'CPF inválido!';
           }
           if (!CNPJ.isValid(value) && widget.validator && widget.typeInput == TypeInput.CNPJ) {
-            return 'CNPJ invalido!';
+            return 'CNPJ inválido!';
           }
           if (!isEmail(value) && !isPhone(value) && widget.emailPhoneValidator) {
             return 'Por favor, insira um e-mail ou número de telefone válido.';
           }
           if (!isEmail(value) && widget.validator && widget.typeInput == TypeInput.EMAIL) {
-            return 'E-mail invalido.';
+            return 'E-mail inválido.';
           }
           return null;
         },
         onChanged: widget.onChanged,
+        textCapitalization: widget.textCapitalization,
         onFieldSubmitted: widget.onSubmit,
         onEditingComplete: widget.onEditingComplete,
         controller: widget.controller,

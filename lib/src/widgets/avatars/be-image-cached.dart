@@ -17,7 +17,7 @@ class BeImageCached extends StatelessWidget {
       imageUrl: url,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
-          borderRadius: radius != null ? BorderRadius.circular(radius) : BorderRadius.circular(15),
+          borderRadius: radius != null ? BorderRadius.circular(radius) : BorderRadius.circular(10),
           image: DecorationImage(
             image: imageProvider,
             fit: BoxFit.cover,

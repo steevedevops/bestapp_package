@@ -66,7 +66,7 @@ class BeDialogContent extends StatelessWidget {
                       child: Text(
                         '$message',
                         textAlign: TextAlign.center,
-                        maxLines: 3,
+                        maxLines: 5,
                         style: TextStyle(
                           fontSize: 17,
                           color: Colors.grey[400],

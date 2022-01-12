@@ -2,7 +2,11 @@ import 'package:bestapp_package/src/formatters/br_telefone_input_formatter.dart'
 import 'package:bestapp_package/src/formatters/cep_input_formatter.dart';
 import 'package:bestapp_package/src/formatters/cnpj_input_formatter.dart';
 import 'package:bestapp_package/src/formatters/cpf_input_formatter.dart';
+import 'package:bestapp_package/src/formatters/credit_card_formatter.dart';
 import 'package:bestapp_package/src/formatters/currency_input_formatter.dart';
+import 'package:bestapp_package/src/formatters/mmyy_formatter.dart';
+import 'package:cpfcnpj/cpfcnpj.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,7 +24,9 @@ enum TypeInput {
   CPF,
   CNPJ,
   CEP,
-  BR_TEL
+  BR_TEL,
+  CREDIT_CARD,
+  MMYY
 }
 
 class BeInputController extends StatefulWidget {
@@ -42,8 +48,10 @@ class BeInputController extends StatefulWidget {
   final bool enableInteractiveSelection;
   final EdgeInsetsGeometry padding;
   final bool validator;
+  final bool emailPhoneValidator;
   final Function(String) onChanged;  
   final Function(String) onSubmit;
+  final VoidCallback onEditingComplete;
   final Color fillColor;
   final bool centerText;
   final TextStyle hintStyle;
@@ -58,8 +66,8 @@ class BeInputController extends StatefulWidget {
   final Color iconColor;
   final EdgeInsetsGeometry sufixIconpadding;
   final bool autofocus;
-  final TextInputAction textInputAction;
-  final FocusNode focusNode;
+  final TextCapitalization textCapitalization;
+
 
   BeInputController({
     this.controller, 
@@ -76,11 +84,11 @@ class BeInputController extends StatefulWidget {
     this.inputFormatters,
     this.keyboardType,
     this.onSuffixTap,
+    this.onEditingComplete,
     this.onPrefixTap,
     this.padding,
     this.enableInteractiveSelection=true,
     this.readOnly=false,
-    this.validator=false,
     this.onChanged,
     this.onSubmit,
     this.centerText=false,
@@ -96,9 +104,11 @@ class BeInputController extends StatefulWidget {
     this.sufixIconpadding,
     this.iconColor,
     this.autofocus = false,
-    this.textInputAction,
-    this.focusNode
-
+    this.validator=false,
+    this.emailPhoneValidator=false,
+    this.textCapitalization= TextCapitalization.none,
+    // this.emailvalidator = false,
+    // this.phoneValidator = false,
   });
 
   @override
@@ -106,6 +116,13 @@ class BeInputController extends StatefulWidget {
 }
 
 class _BeInputControllerState extends State<BeInputController> {
+  
+  bool isEmail(String input) => EmailValidator.validate(input);
+
+  bool isPhone(String input) => RegExp(
+    r'^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$'
+  ).hasMatch(input);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -117,12 +134,24 @@ class _BeInputControllerState extends State<BeInputController> {
           if (value.isEmpty && widget.validator) {
             return 'Campo não pode estar vazio!';
           }
+          if (!CPF.isValid(value) && widget.validator && widget.typeInput == TypeInput.CPF) {
+            return 'CPF inválido!';
+          }
+          if (!CNPJ.isValid(value) && widget.validator && widget.typeInput == TypeInput.CNPJ) {
+            return 'CNPJ inválido!';
+          }
+          if (!isEmail(value) && !isPhone(value) && widget.emailPhoneValidator) {
+            return 'Por favor, insira um e-mail ou número de telefone válido.';
+          }
+          if (!isEmail(value) && widget.validator && widget.typeInput == TypeInput.EMAIL) {
+            return 'E-mail inválido.';
+          }
           return null;
         },
-        textInputAction: widget.textInputAction,
-        focusNode: widget.focusNode,
         onChanged: widget.onChanged,
+        textCapitalization: widget.textCapitalization,
         onFieldSubmitted: widget.onSubmit,
+        onEditingComplete: widget.onEditingComplete,
         controller: widget.controller,
         autofocus: widget.autofocus,
         textAlign: widget.centerText ? TextAlign.center : TextAlign.start, 
@@ -137,6 +166,7 @@ class _BeInputControllerState extends State<BeInputController> {
         obscureText: widget.typeInput == TypeInput.PASSWORD && widget.obscure ? true : false,
         inputFormatters: defineTypeformatters(widget.typeInput),
         keyboardType: defineTypeInput(widget.typeInput),
+        maxLines: widget.keyboardType == TextInputType.multiline ? null : 1,
         cursorColor: Theme.of(context).primaryColor,
         decoration: new InputDecoration(
           prefix: widget.prefix != null ? widget.prefix : null,
@@ -215,6 +245,18 @@ class _BeInputControllerState extends State<BeInputController> {
         BrtelefoneInputFormatter()
       ];
     }
+    else if(typeInput == TypeInput.CREDIT_CARD){
+      return [
+        FilteringTextInputFormatter.digitsOnly,
+        CreditCardFormatter()
+      ];
+    }
+    else if(typeInput == TypeInput.MMYY){
+      return [
+        FilteringTextInputFormatter.digitsOnly,
+        MMYYFormatter()
+      ];
+    }
     else if(typeInput == TypeInput.CURRENCY){
       return [
         FilteringTextInputFormatter.digitsOnly,
@@ -226,7 +268,7 @@ class _BeInputControllerState extends State<BeInputController> {
   }
 
   TextInputType defineTypeInput(TypeInput typeInput){
-    if(typeInput == TypeInput.CPF || typeInput == TypeInput.CNPJ || typeInput == TypeInput.CEP || typeInput == TypeInput.BR_TEL || typeInput == TypeInput.COUNTER || typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.NUMBER){
+    if(typeInput == TypeInput.MMYY || typeInput == TypeInput.CREDIT_CARD || typeInput == TypeInput.CPF || typeInput == TypeInput.CNPJ || typeInput == TypeInput.CEP || typeInput == TypeInput.BR_TEL || typeInput == TypeInput.COUNTER || typeInput == TypeInput.CURRENCY || widget.typeInput == TypeInput.NUMBER){
       return TextInputType.number;
     }else if(typeInput == TypeInput.EMAIL){
       return TextInputType.emailAddress;

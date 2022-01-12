@@ -35,7 +35,7 @@ class ApiServices{
     dio.options.baseUrl = '${this._baseUrl}/';
     dio.options.headers = headers;
     dio.options.method = metodo;
-    dio.options.responseType = ResponseType.json;    
+    dio.options.responseType = ResponseType.json;
     Map<String, dynamic> jsonReturned = {};
     try {
       response = await dio.request(
@@ -45,15 +45,18 @@ class ApiServices{
         queryParameters: params
       );
       _reqSuccess = true;
-      jsonReturned = (response.data is String) ? {'msg': ''} : response.data;
+      // jsonReturned = (response.data is String) ? {'msg': ''} : (response.data is List) ? {'result': response.data} : response.data;
+      jsonReturned = response.data is List ? {'result': response.data } : response.data is String ? {'msg': ''} : response.data;
       jsonReturned['statusCode'] = response.statusCode;
     } on DioError catch (e) {
       _reqSuccess = false;
-
       if(e.response != null){        
         jsonReturned['statusCode'] = e.response.statusCode;
         switch (e.response.statusCode) {          
           case 400:
+            jsonReturned = e.response.data;
+            break;
+          case 401:
             jsonReturned = e.response.data;
             break;
           case 403: //unauthorized OR forbidden            
@@ -80,6 +83,7 @@ class ApiServices{
     @required File file,     
     @required BuildContext context,
     Map<String, dynamic> paramsData,
+    List<File> files,
     ProgressCallback onSendProgress,
     String redirectTo,
   }) async {        
@@ -90,9 +94,20 @@ class ApiServices{
 
     if (this._token != null) {        
       dio.options.baseUrl = '${this._baseUrl}/';
+
+      List<dynamic> multipartFiles = [];
+
+      if(files != null){
+        for (var i = 0; i < files.length; i++) {
+          var respath = await MultipartFile.fromFile(files[i].path, filename: DateTime.now().millisecondsSinceEpoch.toString()+'.jpg');
+          multipartFiles.add(respath);
+        }
+      }
+
       FormData formData = new FormData.fromMap({
         ...paramsData,
-        'file': await MultipartFile.fromFile(file.absolute.path, filename: DateTime.now().millisecondsSinceEpoch.toString()+'.jpg')
+        'file': file != null ? await MultipartFile.fromFile(file.path, filename: DateTime.now().millisecondsSinceEpoch.toString()+'.jpg') : null,
+        'files': multipartFiles
       });
 
       try {

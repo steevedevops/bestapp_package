@@ -67,6 +67,7 @@ class BeInputController extends StatefulWidget {
   final EdgeInsetsGeometry sufixIconpadding;
   final bool autofocus;
   final TextCapitalization textCapitalization;
+  final FocusNode focusNode;
 
 
   BeInputController({
@@ -107,6 +108,7 @@ class BeInputController extends StatefulWidget {
     this.validator=false,
     this.emailPhoneValidator=false,
     this.textCapitalization= TextCapitalization.none,
+    this.focusNode
     // this.emailvalidator = false,
     // this.phoneValidator = false,
   });
@@ -157,6 +159,7 @@ class _BeInputControllerState extends State<BeInputController> {
         textAlign: widget.centerText ? TextAlign.center : TextAlign.start, 
         enabled:  widget.enable,
         readOnly: widget.readOnly,
+        focusNode: widget.focusNode,
         enableInteractiveSelection: widget.enableInteractiveSelection,
         showCursor: true,
         style: widget.style != null ? widget.style

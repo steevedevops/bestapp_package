@@ -126,8 +126,14 @@ class ApiServices{
           )          
         );
         _reqSuccess = true;
-        jsonReturned = response.data;
         jsonReturned['statusCode'] = response.statusCode;
+        switch (response.statusCode) {          
+          case 204:
+            jsonReturned = {'msg': ''};
+            break;
+          default:
+            jsonReturned = response.data;
+        }
 
       } on DioError catch (e) {
         _reqSuccess = false;
